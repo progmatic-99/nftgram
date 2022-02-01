@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Flex,
   Heading,
@@ -8,6 +9,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
+import { navLinks } from "../src/components/layout/navbar";
 
 const Index = () => {
   return (
@@ -15,23 +17,42 @@ const Index = () => {
       <Flex
         h="100vh"
         py={3}
+        align="center"
         direction={["column-reverse", "column-reverse", "row", "row"]}
       >
-        <VStack align="flex-start" w="full" h="full" py={20} spacing={8}>
+        <VStack
+          align={["center"]}
+          w="full"
+          h="full"
+          py={[null, null, "20", "20"]}
+          spacing={8}
+        >
           <Heading size="4xl">Qrator</Heading>
           <Text color="gray.500" fontSize="xl" noOfLines={4}>
-            Build your NFT portfolio. Browse plethora of NFTs from different
-            chains on 1 platform.
+            Build your NFT portfolio. <br />
+            Browse plethora of NFTs from different chains on
+            <br /> 1 platform.
           </Text>
+          {/* {navLinks.map(({ href, label }) => {
+            return (
+              <Button size="lg" key={href}>
+                {label}
+              </Button>
+            );
+          })} */}
         </VStack>
-        <VStack w="full" h="full" p={4} spacing={10}>
+        <VStack
+          align="center"
+          w={["450px", "450px", "900px", "900px"]}
+          h={["450px", "450px", "500px", "500px"]}
+          p={["8", "8", "2", "2"]}
+        >
           <Box
             w="full"
             h="full"
             borderWidth="1px"
             borderRadius="2xl"
             borderColor="base.border"
-            overflow="hidden"
           >
             <Image src="/front.webp" alt="Front page NFT" w="full" h="full" />
           </Box>
