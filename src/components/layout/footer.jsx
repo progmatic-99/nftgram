@@ -10,10 +10,10 @@ import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <VStack pb={8} spacing={8}>
+    <VStack pb={8} spacing={6}>
       <Divider borderColor="gray.500" />
       <SimpleGrid align="start" columns={{ base: 1, md: 1 }} w="full">
-        <VStack align="center">
+        <VStack align="center" fontWeight="bold">
           <Link href="https://github.com/progmatic-99/nftgram" isExternal>
             Github repo
           </Link>

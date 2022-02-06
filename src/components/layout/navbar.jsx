@@ -1,10 +1,7 @@
 import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-export const navLinks = [
-  { href: "/login", label: "Sign In" },
-  { href: "/signup", label: "Sign Up" },
-];
+export const navLinks = [{ href: "/login", label: "Login" }];
 
 const Navbar = () => {
   return (

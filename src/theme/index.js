@@ -22,10 +22,10 @@ const theme = extendTheme({
   components: {
     Link: {
       baseStyle: {
-        color: "grey.700",
+        color: "base.primary",
         _hover: {
           textDecoration: "none",
-          color: "#ef972c",
+          color: "base.secondary",
         },
         _active: {
           color: "purple.500",
@@ -34,7 +34,28 @@ const theme = extendTheme({
     },
     Button: {
       baseStyle: {
-        bg: "purple.500",
+        color: "base.primary",
+      },
+      variants: {
+        primary: {
+          bg: "base.secondary",
+          borderRadius: "2rem",
+
+          _hover: {
+            borderColor: "base.border",
+            bg: "gray.700",
+            color: "white",
+          },
+        },
+        secondary: {
+          bg: "#2D3748",
+          color: "white",
+          borderRadius: "2rem",
+
+          _hover: {
+            bg: "base.border",
+          },
+        },
       },
     },
   },
