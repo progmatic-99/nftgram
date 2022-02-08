@@ -39,10 +39,11 @@ const Index = () => {
             {navLinks.map(({ href, label }) => {
               return (
                 <Button
-                  variant={href === "/login" ? "primary" : "secondary"}
+                  variant="primary"
                   size="lg"
                   alignSelf="center"
                   key={href}
+                  href={href}
                 >
                   {label}
                 </Button>
