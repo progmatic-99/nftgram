@@ -1,8 +1,6 @@
 import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
 
-export const navLinks = [{ href: "/login", label: "Login" }];
-
 const Navbar = () => {
   return (
     <HStack
@@ -32,15 +30,11 @@ const Navbar = () => {
           </Link>
         </NextLink>
         <HStack align="center" spacing={{ base: 6, md: 4 }}>
-          {navLinks.map(({ href, label }) => {
-            return (
-              <NextLink key={href} href={href} passHref>
-                <Link>
-                  <Heading size="md">{label}</Heading>
-                </Link>
-              </NextLink>
-            );
-          })}
+          <NextLink href="/login" passHref>
+            <Link>
+              <Heading size="md">Login</Heading>
+            </Link>
+          </NextLink>
         </HStack>
       </Container>
     </HStack>

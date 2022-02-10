@@ -22,6 +22,7 @@ const Login = () => {
               borderWidth="2px"
               borderColor="base.border"
               display="flex"
+              key={name}
               justifyContent="space-between"
               alignItems="center"
               _hover={{ shadow: "2xl", transform: "scale(1.1)" }}
