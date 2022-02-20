@@ -3,6 +3,7 @@ import "@fontsource/open-sans/700.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../src/components/layout";
 import theme from "../src/theme";
+import "../style.css";
 
 function MyApp({ Component, pageProps }) {
   return (

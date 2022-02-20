@@ -10,7 +10,7 @@ import { FaHeart } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <VStack pb={8} spacing={6}>
+    <VStack pb={8} spacing={6} as="footer" zIndex="overlay">
       <Divider borderColor="gray.500" />
       <SimpleGrid align="start" columns={{ base: 1, md: 1 }} w="full">
         <VStack align="center" fontWeight="bold">

@@ -26,7 +26,7 @@ const Navbar = () => {
       >
         <NextLink href="/" passHref>
           <Link>
-            <Image w="60px" h="60px" src="/logo.webp" />
+            <Image w="60px" h="60px" alt="Qrator logo" src="/logo.webp" />
           </Link>
         </NextLink>
         <HStack align="center" spacing={{ base: 6, md: 4 }}>
