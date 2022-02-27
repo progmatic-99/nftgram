@@ -19,5 +19,5 @@ export async function getStaticProps() {
     { method: "GET" }
   ).then((res) => res.json());
 
-  return { props: { data }, revalidate: 60 * 60 };
+  return { props: { data }, revalidate: 60 * 60 * 1000 };
 }
