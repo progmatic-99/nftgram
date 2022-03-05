@@ -10,16 +10,25 @@ import (
 
 func (h handler) CreateUser(c *gin.Context) {
 	var user models.User
-	if err := c.BindJSON(&user); err != nil {
+
+	if err := c.ShouldBindJSON(&user); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": err.Error(),
+		})
 		log.Fatalln(err)
+
+		return
 	}
+
+	// c.BindJSON(&user)
 
 	if err := h.DB.Create(&user).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Params missing!",
+			"error": err.Error(),
 		})
-
 		log.Fatalln(err)
+
+		return
 	}
 
 	c.JSON(http.StatusCreated, gin.H{

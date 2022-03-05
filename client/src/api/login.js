@@ -2,10 +2,16 @@ import detectEthereumProvider from "@metamask/detect-provider";
 
 export const connectMetamask = async () => {
   const provider = await detectEthereumProvider();
+  console.log(provider);
 
   if (provider) {
-    console.log(provider);
-    return true;
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    console.log(accounts);
+    const account = accounts[0];
+    console.log(account);
+    return account;
 
     // From now on, this should always be true:
     // provider === window.ethereum
@@ -18,17 +24,17 @@ export const connectMetamask = async () => {
     // })
   } else {
     // if the provider is not detected, detectEthereumProvider resolves to null
-    return false;
+    return err;
   }
 };
 
 export const connectPhantom = async () => {
   try {
     const resp = await window.solana.connect();
-    console.log(resp.publicKey.toString());
-    return true;
+    const account = resp.publicKey.toString();
+
+    return account;
   } catch (err) {
-    console.error(err);
-    return false;
+    return err;
   }
 };

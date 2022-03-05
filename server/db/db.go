@@ -9,7 +9,7 @@ import (
 )
 
 func Init() *gorm.DB {
-	dbUrl := "postgresql://progmatic99:@localhost:5432/qrator?sslmode=disable"
+	dbUrl := "postgresql://progmatic99:@localhost:5432/nftgram?sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 
 	if err != nil {

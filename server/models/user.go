@@ -6,9 +6,9 @@ import (
 )
 
 type User struct {
-	ID       uuid.UUID `json:"nonce" gorm:"type:uuid;primaryIndex;"`
-	MetaMask string    `json:"metamask_id"`
-	Phantom  string    `json:"phantom_id"`
+	ID         uuid.UUID `json:"nonce" gorm:"type:uuid;primaryIndex;"`
+	MetamaskID string    `json:"metamask_id"`
+	PhantomID  string    `json:"phantom_id"`
 }
 
 func (u *User) BeforeCreate(tx *gorm.DB) (err error) {

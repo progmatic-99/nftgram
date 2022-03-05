@@ -1,51 +1,81 @@
-import { useState } from "react";
 import {
   Flex,
-  Heading,
-  Input,
-  Button,
-  InputGroup,
-  Stack,
   Box,
-  Link,
   FormControl,
   FormLabel,
+  Input,
+  Image,
+  InputGroup,
   InputRightElement,
+  Stack,
+  Button,
+  Heading,
   Text,
   useColorModeValue,
+  Link,
 } from "@chakra-ui/react";
+import { useState } from "react";
+import { connectMetamask, connectPhantom } from "../src/api/login";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { toast } from "../src/utils/toast";
 import { fetcher } from "../src/utils/fetcher";
 
-const Login = () => {
+const wallets = [
+  { name: "MetaMask", img: "/metamask.webp" },
+  { name: "Phantom", img: "/phantom.webp" },
+];
+
+export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [metamaskId, setMetamaskId] = useState("");
+  const [phantomId, setPhantomId] = useState("");
   const router = useRouter();
+
+  const connectWallet = async (name) => {
+    try {
+      if (name === "Metamask") {
+        const account = await connectMetamask();
+        setMetamaskId(account);
+      } else {
+        const account = await connectPhantom();
+        setPhantomId(account);
+      }
+
+      return toast({
+        title: `${name} Wallet Connected!!`,
+        status: "success",
+      });
+    } catch (err) {
+      console.error(err);
+      return toast({
+        title: "Connection failed!!",
+        status: "error",
+        description: `Please install ${name}!!`,
+      });
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [status, err] = await fetcher("login", "POST", {
+    const [status, err] = await fetcher("signup", "POST", {
       email: email,
       password: password,
+      metamask_id: metamaskId,
+      phantom_id: phantomId,
     });
     if (status === 200) {
-      setEmail("");
-      setPassword("");
-      toast({
-        title: "Login succesfull!!",
+      router.push("/login");
+      return toast({
+        title: "Account creation succesfull!!",
         status: "success",
         description: "Please login with your credentials!!",
       });
-
-      router.push("/profile");
     } else {
-      console.error(err);
-      toast({
-        title: "Login failed!!",
+      return toast({
+        title: "Account creation failed!!",
         status: "error",
         description: err,
       });
@@ -55,17 +85,17 @@ const Login = () => {
   return (
     <Flex
       minH={"100vh"}
-      align={"flex-start"}
+      align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
-            Log In
+            Sign up
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
-            to browse NFTs from different chains ✌️
+            to enjoy all of our cool features ✌️
           </Text>
         </Stack>
         <Box
@@ -107,6 +137,32 @@ const Login = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
+              {wallets.map(({ name, img }, index) => {
+                return (
+                  <FormControl key={index}>
+                    <FormLabel>Connect your {name} wallet!</FormLabel>
+                    <InputGroup>
+                      <Box
+                        as="button"
+                        p={3}
+                        w="full"
+                        borderWidth="2px"
+                        borderColor="base.border"
+                        display="flex"
+                        key={name}
+                        justifyContent="space-between"
+                        alignItems="center"
+                        onClick={() => connectWallet(name)}
+                        _hover={{ shadow: "2xl", transform: "scale(1.1)" }}
+                        _focus={{ borderColor: "base.secondary" }}
+                      >
+                        <Image src={img} alt="Wallet Image" h="30px" w="30px" />
+                        <Heading size="sm">{name}</Heading>
+                      </Box>
+                    </InputGroup>
+                  </FormControl>
+                );
+              })}
               <Stack spacing={10} pt={2}>
                 <Button
                   loadingText="Submitting"
@@ -118,14 +174,14 @@ const Login = () => {
                     color: "white",
                   }}
                 >
-                  Log in
+                  Sign up
                 </Button>
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>
-                  New here ?{" "}
-                  <NextLink href="/signup" passHref>
-                    <Link color={"blue.400"}>Signup</Link>
+                  Already a user?{" "}
+                  <NextLink href="/login" passHref>
+                    <Link color={"blue.400"}>Login</Link>
                   </NextLink>
                 </Text>
               </Stack>
@@ -135,6 +191,4 @@ const Login = () => {
       </Stack>
     </Flex>
   );
-};
-
-export default Login;
+}
