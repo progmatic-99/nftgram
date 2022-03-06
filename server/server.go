@@ -20,7 +20,8 @@ func main() {
 		})
 		log.Println("/hello hit!!")
 	})
-	r.POST("/api/register", h.CreateUser)
+	r.POST("/api/signup", h.CreateUser)
+	r.POST("/api/login", h.LoginUser)
 
 	// Start the server on 8080
 	r.Run()
