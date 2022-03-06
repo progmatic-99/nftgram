@@ -1,20 +1,23 @@
 package handlers
 
 import (
-	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/progmatic-99/nftgram/server/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
+var (
+	ErrEmailNotFound = "email not found"
+	ErrWrongPassword = "wrong password"
+)
+
 func (h handler) LoginUser(c *gin.Context) {
 	var user models.User
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		log.Println(err)
-
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
@@ -23,25 +26,31 @@ func (h handler) LoginUser(c *gin.Context) {
 
 	var storedUser models.User
 
-	if err := h.DB.Select("email").First(&storedUser, "email = ?", string(user.Email)).Error; err != nil {
-		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Email not found.",
+	if err := h.DB.First(&storedUser, "email = ?", string(user.Email)).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": ErrEmailNotFound,
 		})
 
 		return
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(storedUser.Password), []byte(user.Password)); err != nil {
-		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{
-			"error": "Wrong password!!",
+			"error": ErrWrongPassword,
 		})
 
 		return
 	}
 
+	accessToken, err := h.tokenMaker.CreateToken(storedUser.ID, storedUser.Email, 2*time.Hour)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"error": err,
+		})
+	}
+
 	c.JSON(http.StatusAccepted, gin.H{
-		"message": "Login successfull!!",
+		"access-token": accessToken,
+		"user":         storedUser,
 	})
 }

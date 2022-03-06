@@ -6,7 +6,7 @@ import (
 )
 
 type User struct {
-	ID         uuid.UUID `json:"nonce" gorm:"type:uuid;primaryIndex;"`
+	ID         uuid.UUID `json:"id" gorm:"type:uuid;primaryIndex;"`
 	Email      string    `json:"email" gorm:"unique"`
 	Password   string    `json:"password"`
 	MetamaskID string    `json:"metamask_id"`

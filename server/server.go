@@ -7,13 +7,25 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/progmatic-99/nftgram/server/db"
 	"github.com/progmatic-99/nftgram/server/handlers"
+	"github.com/progmatic-99/nftgram/server/token"
+	"github.com/progmatic-99/nftgram/server/util"
 )
 
 func main() {
-	DB := db.Init()
-	h := handlers.New(DB)
+	config, err := util.LoadConfig(".")
+	if err != nil {
+		log.Fatalln("cannot load config", err)
+	}
 
-	r := gin.New()
+	DB := db.Init(config.DBUrl)
+	tokenMaker, err := token.NewJWTMaker(config.SecretKey)
+	if err != nil {
+		log.Fatalln("cannot create token maker: ", err)
+	}
+
+	h := handlers.New(DB, tokenMaker, config.TokenDuration)
+
+	r := gin.Default()
 	r.GET("/hello", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
 			"message": "Hello world!!",
