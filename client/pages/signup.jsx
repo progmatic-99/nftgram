@@ -60,16 +60,16 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [status, err] = await fetcher("signup", "POST", {
+    const [data, err] = await fetcher("signup", "POST", {
       email: email,
       password: password,
       metamask_id: metamaskId,
       phantom_id: phantomId,
     });
-    if (status === 200) {
+    if (!err) {
       router.push("/login");
       return toast({
-        title: "Account creation succesfull!!",
+        title: data.message,
         status: "success",
         description: "Please login with your credentials!!",
       });

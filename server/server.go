@@ -18,6 +18,7 @@ func main() {
 	}
 
 	DB := db.Init(config.DBUrl)
+
 	tokenMaker, err := token.NewJWTMaker(config.SecretKey)
 	if err != nil {
 		log.Fatalln("cannot create token maker: ", err)
@@ -34,6 +35,10 @@ func main() {
 	})
 	r.POST("/api/signup", h.CreateUser)
 	r.POST("/api/login", h.LoginUser)
+
+	authRouter := r.Group("/").Use(authMiddleware(tokenMaker))
+
+	authRouter.GET("/api/user", h.GetUser)
 
 	// Start the server on 8080
 	r.Run()

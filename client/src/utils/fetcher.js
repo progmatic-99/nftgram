@@ -9,8 +9,12 @@ export const fetcher = async (url, method, data) => {
     });
     const resJson = res.json();
 
-    return [resJson.status, resJson.err];
+    return [
+      resJson,
+      res.staus >= 200 && res.status <= 400 ? null : resJson.error,
+    ];
   } catch (err) {
+    console.error(err);
     return [null, err];
   }
 };

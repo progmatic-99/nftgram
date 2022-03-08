@@ -40,6 +40,5 @@ func (h handler) CreateUser(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "User created!!",
-		"nonce":   user.ID,
 	})
 }

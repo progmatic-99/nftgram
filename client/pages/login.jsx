@@ -28,18 +28,20 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [status, err] = await fetcher("login", "POST", {
+    const [data, err] = await fetcher("login", "POST", {
       email: email,
       password: password,
     });
-    if (status === 200) {
+    if (!err) {
       setEmail("");
       setPassword("");
+      console.table(data);
       toast({
         title: "Login succesfull!!",
         status: "success",
         description: "Please login with your credentials!!",
       });
+      localStorage.setItem("accessToken", data.accessToken);
 
       router.push("/profile");
     } else {

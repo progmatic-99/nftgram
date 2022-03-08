@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/progmatic-99/nftgram/server/models"
@@ -42,7 +41,7 @@ func (h handler) LoginUser(c *gin.Context) {
 		return
 	}
 
-	accessToken, err := h.tokenMaker.CreateToken(storedUser.ID, storedUser.Email, 2*time.Hour)
+	accessToken, err := h.tokenMaker.CreateToken(storedUser.ID, storedUser.Email, h.TokenDuration)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
@@ -50,7 +49,7 @@ func (h handler) LoginUser(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusAccepted, gin.H{
-		"access-token": accessToken,
-		"user":         storedUser,
+		"accessToken": accessToken,
+		"id":          storedUser.ID,
 	})
 }
