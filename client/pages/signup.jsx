@@ -13,12 +13,12 @@ import {
   Text,
   useColorModeValue,
   Link,
+  createStandaloneToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { connectMetamask, connectPhantom } from "../src/api/login";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { toast } from "../src/utils/toast";
 import { fetcher } from "../src/utils/fetcher";
 
 const wallets = [
@@ -33,6 +33,12 @@ export default function Signup() {
   const [metamaskId, setMetamaskId] = useState("");
   const [phantomId, setPhantomId] = useState("");
   const router = useRouter();
+
+  const toast = createStandaloneToast({
+    duration: 3000,
+    isClosable: true,
+    position: "bottom",
+  });
 
   const connectWallet = async (name) => {
     try {
@@ -167,6 +173,7 @@ export default function Signup() {
                 <Button
                   loadingText="Submitting"
                   size="lg"
+                  type="submit"
                   bg="base.secondary"
                   color="base.primary"
                   _hover={{

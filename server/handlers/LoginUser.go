@@ -8,13 +8,18 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+type userLoginRequest struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 var (
 	ErrEmailNotFound = "email not found"
 	ErrWrongPassword = "wrong password"
 )
 
 func (h handler) LoginUser(c *gin.Context) {
-	var user models.User
+	var user userLoginRequest
 
 	if err := c.ShouldBindJSON(&user); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -50,6 +55,5 @@ func (h handler) LoginUser(c *gin.Context) {
 
 	c.JSON(http.StatusAccepted, gin.H{
 		"accessToken": accessToken,
-		"id":          storedUser.ID,
 	})
 }

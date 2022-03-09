@@ -13,39 +13,48 @@ import {
   InputRightElement,
   Text,
   useColorModeValue,
+  createStandaloneToast,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { toast } from "../src/utils/toast";
 import { fetcher } from "../src/utils/fetcher";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const router = useRouter();
+
+  const toast = createStandaloneToast({
+    duration: 3000,
+    isClosable: true,
+    position: "bottom",
+  });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [data, err] = await fetcher("login", "POST", {
-      email: email,
-      password: password,
-    });
+    const [data, err] = await fetcher(
+      "login",
+      "POST",
+      (data = {
+        email: email,
+        password: password,
+      })
+    );
     if (!err) {
       setEmail("");
       setPassword("");
-      console.table(data);
+
+      localStorage.setItem("accessToken", data.accessToken);
+
       toast({
         title: "Login succesfull!!",
         status: "success",
         description: "Please login with your credentials!!",
       });
-      localStorage.setItem("accessToken", data.accessToken);
-
-      router.push("/profile");
     } else {
       console.error(err);
+
       toast({
         title: "Login failed!!",
         status: "error",
@@ -113,6 +122,7 @@ const Login = () => {
                 <Button
                   loadingText="Submitting"
                   size="lg"
+                  type="submit"
                   bg="base.secondary"
                   color="base.primary"
                   _hover={{
