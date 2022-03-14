@@ -1,28 +1,22 @@
-import { useRouter } from "next/router";
+import { fetcher } from "../utils/fetcher";
 
-import React from "react";
-
-const withAuth = (fn) => {
-  return async (props) => {
+const withAuth = (gssp) => {
+  return async (ctx) => {
+    console.log(typeof window);
     if (typeof window !== "undefined") {
-      const router = useRouter();
       const accessToken = localStorage.getItem("accessToken");
 
       if (!accessToken) {
-        router.push("/login");
-        return null;
+        return {
+          redirect: {
+            destination: "/login",
+          },
+        };
       }
 
-      const user = await fetcher("user", "GET", (token = accessToken));
-      if (!user) {
-        router.push("/login");
-        return null;
-      }
-
-      return fn(props);
+      ctx.accessToken = accessToken;
     }
-
-    return null;
+    return await gssp(ctx);
   };
 };
 

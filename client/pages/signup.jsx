@@ -66,11 +66,15 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [data, err] = await fetcher("signup", "POST", {
-      email: email,
-      password: password,
-      metamask_id: metamaskId,
-      phantom_id: phantomId,
+    const [data, err] = await fetcher({
+      url: "signup",
+      method: "POST",
+      data: {
+        email: email,
+        password: password,
+        metamask_id: metamaskId,
+        phantom_id: phantomId,
+      },
     });
     if (!err) {
       router.push("/login");

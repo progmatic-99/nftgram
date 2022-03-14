@@ -1,10 +1,10 @@
-import { VStack } from "@chakra-ui/react";
+import { useColorModeValue, VStack } from "@chakra-ui/react";
 import About from "../src/templates/about";
 import { Main } from "../src/templates/main";
 
 const Index = ({ data }) => {
   return (
-    <VStack minH="100vh">
+    <VStack minH="100vh" bg={useColorModeValue("gray.50", "gray.800")}>
       <Main />
       <About assets={data.bundles} />
     </VStack>

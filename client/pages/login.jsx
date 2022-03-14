@@ -33,14 +33,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [data, err] = await fetcher(
-      "login",
-      "POST",
-      (data = {
+    const [data, err] = await fetcher({
+      url: "login",
+      method: "POST",
+      data: {
         email: email,
         password: password,
-      })
-    );
+      },
+    });
     if (!err) {
       setEmail("");
       setPassword("");
@@ -52,6 +52,7 @@ const Login = () => {
         status: "success",
         description: "Please login with your credentials!!",
       });
+      router.push("/profile");
     } else {
       console.error(err);
 

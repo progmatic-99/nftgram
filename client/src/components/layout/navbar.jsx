@@ -19,7 +19,6 @@ const Navbar = () => {
       alignItems="center"
       w="full"
       py={3}
-      // mb={6}
       borderBottom="1px solid #a9b2bf"
     >
       <Container
@@ -35,7 +34,11 @@ const Navbar = () => {
           </Link>
         </NextLink>
         {/* <Spacer /> */}
-        <HStack align="center" spacing={{ base: 6, md: 4 }} mr={10}>
+        <HStack
+          align="center"
+          spacing={{ base: 6, md: 4 }}
+          mr={{ base: 0, lg: 10 }}
+        >
           {Object.entries(pages).map(([route, value], index) => {
             return (
               <NextLink href={route} key={index} passHref>

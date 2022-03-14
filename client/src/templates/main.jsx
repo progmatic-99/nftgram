@@ -41,6 +41,16 @@ export const Main = () => {
                 Login
               </Button>
             </NextLink>
+            <NextLink href="/signup" passHref>
+              <Button
+                as={Link}
+                variant="secondary"
+                size="lg"
+                alignSelf="center"
+              >
+                Signup
+              </Button>
+            </NextLink>
           </HStack>
         </VStack>
         <VStack w="full" h="full" p={["8", "6", null, null]}>

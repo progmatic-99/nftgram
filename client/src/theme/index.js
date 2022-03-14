@@ -40,11 +40,12 @@ const theme = extendTheme({
         primary: {
           bg: "base.secondary",
           borderRadius: "2rem",
+          color: "white",
 
           _hover: {
-            borderColor: "base.border",
-            bg: "gray.700",
-            color: "white",
+            color: "black",
+            boxShadow: "md",
+            boxShadowColor: "gray.200",
           },
         },
         secondary: {
@@ -53,7 +54,8 @@ const theme = extendTheme({
           borderRadius: "2rem",
 
           _hover: {
-            bg: "base.border",
+            bg: "gray.200",
+            color: "black",
           },
         },
       },
