@@ -1,22 +1,33 @@
-import { fetcher } from "../utils/fetcher";
+import { useRouter } from "next/router";
 
-const withAuth = (gssp) => {
-  return async (ctx) => {
-    console.log(typeof window);
-    if (typeof window !== "undefined") {
+const withAuth = (WrappedComponent) => {
+  return (props) => {
+    const Router = useRouter();
+
+    useEffect(async () => {
       const accessToken = localStorage.getItem("accessToken");
-
+      // if no accessToken was found,then we redirect to "/" page.
       if (!accessToken) {
-        return {
-          redirect: {
-            destination: "/login",
-          },
-        };
+        Router.replace("/");
+      } else {
+        // we call the api that verifies the token.
+        const data = await verifyToken(accessToken);
+        // if token was verified we set the state.
+        if (data.verified) {
+          setVerified(data.verified);
+        } else {
+          // If the token was fraud we first remove it from localStorage and then redirect to "/"
+          localStorage.removeItem("accessToken");
+          Router.replace("/");
+        }
       }
+    }, []);
 
-      ctx.accessToken = accessToken;
+    if (verified) {
+      return <WrappedComponent {...props} />;
+    } else {
+      return null;
     }
-    return await gssp(ctx);
   };
 };
 

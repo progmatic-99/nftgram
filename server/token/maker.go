@@ -7,6 +7,7 @@ import (
 )
 
 type Maker interface {
-	CreateToken(id uuid.UUID, email string, duration time.Duration) (string, error)
+	CreateToken(email string, metamaskId string, phantomId string, duration time.Duration) (string, error)
 	VerifyToken(token string) (*Payload, error)
+	CreateRefreshToken(id uuid.UUID) (string, error)
 }

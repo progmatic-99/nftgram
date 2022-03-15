@@ -13,26 +13,49 @@ var (
 )
 
 type Payload struct {
-	ID        uuid.UUID `json:"id"`
-	Email     string    `json:"email"`
-	CreatedAt time.Time `json:"created_at"`
-	ExpiredAt time.Time `json:"expired_at"`
+	Email      string    `json:"email"`
+	MetamaskID string    `json:"metamaskId"`
+	PhantomID  string    `json:"phantomId"`
+	CreatedAt  time.Time `json:"createdAt"`
+	ExpiredAt  time.Time `json:"expiredAt"`
 }
 
-func NewPayload(id uuid.UUID, email string, duration time.Duration) (*Payload, error) {
-	tokenID := id
+type RefreshPayload struct {
+	ID        uuid.UUID `json:"id"`
+	ExpiredAt time.Time `json:"expiredAt"`
+}
+
+func NewPayload(email string, metamaskId string, phantomId string, duration time.Duration) (*Payload, error) {
 
 	payload := &Payload{
-		ID:        tokenID,
-		Email:     email,
-		CreatedAt: time.Now(),
-		ExpiredAt: time.Now().Add(duration),
+		Email:      email,
+		MetamaskID: metamaskId,
+		PhantomID:  phantomId,
+		CreatedAt:  time.Now(),
+		ExpiredAt:  time.Now().Add(duration),
 	}
 
 	return payload, nil
 }
 
 func (payload *Payload) Valid() error {
+	if time.Now().After(payload.ExpiredAt) {
+		return ErrExpiredToken
+	}
+
+	return nil
+}
+
+func NewRefreshPayload(id uuid.UUID) (*RefreshPayload, error) {
+	payload := &RefreshPayload{
+		ID:        id,
+		ExpiredAt: time.Now().Add(time.Hour * 24),
+	}
+
+	return payload, nil
+}
+
+func (payload *RefreshPayload) Valid() error {
 	if time.Now().After(payload.ExpiredAt) {
 		return ErrExpiredToken
 	}

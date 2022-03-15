@@ -17,13 +17,18 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
+import { useStore, useToken } from "../src/store";
 import { fetcher } from "../src/utils/fetcher";
+import jwt from "jsonwebtoken";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const addUser = useStore((state) => state.addUser);
+  const addAccessToken = useToken((state) => state.addAccessToken);
+  const addRefreshToken = useToken((state) => state.addRefreshToken);
 
   const toast = createStandaloneToast({
     duration: 3000,
@@ -45,14 +50,17 @@ const Login = () => {
       setEmail("");
       setPassword("");
 
-      localStorage.setItem("accessToken", data.accessToken);
+      addAccessToken(data.accessToken);
+      addRefreshToken(data.refreshToken);
+      const user = jwt.decode(data.accessToken);
+      addUser(user);
 
       toast({
         title: "Login succesfull!!",
         status: "success",
         description: "Please login with your credentials!!",
       });
-      router.push("/profile");
+      // router.push("/profile");
     } else {
       console.error(err);
 
