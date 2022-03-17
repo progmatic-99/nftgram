@@ -1,5 +1,6 @@
 import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useStore } from "../../store/user";
 
 const pages = {
   "/signup": "Signup",
@@ -7,6 +8,8 @@ const pages = {
 };
 
 const Navbar = () => {
+  const user = useStore((state) => state.user);
+
   return (
     <HStack
       as="nav"
@@ -39,15 +42,23 @@ const Navbar = () => {
           spacing={{ base: 6, md: 4 }}
           mr={{ base: 0, lg: 10 }}
         >
-          {Object.entries(pages).map(([route, value], index) => {
-            return (
-              <NextLink href={route} key={index} passHref>
-                <Link>
-                  <Heading size="md">{value}</Heading>
-                </Link>
-              </NextLink>
-            );
-          })}
+          {user ? (
+            <NextLink href="/" passHref>
+              <Link>
+                <Heading size="md">Logout</Heading>
+              </Link>
+            </NextLink>
+          ) : (
+            Object.entries(pages).map(([route, value], index) => {
+              return (
+                <NextLink href={route} key={index} passHref>
+                  <Link>
+                    <Heading size="md">{value}</Heading>
+                  </Link>
+                </NextLink>
+              );
+            })
+          )}
         </HStack>
       </Container>
     </HStack>

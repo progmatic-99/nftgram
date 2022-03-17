@@ -1,32 +1,24 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useToken } from "../store/token";
+import { verifyToken } from "../utils/verifyToken";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
     const Router = useRouter();
+    const accessToken = useToken((state) => state.accessToken);
 
-    useEffect(async () => {
-      const accessToken = localStorage.getItem("accessToken");
-      // if no accessToken was found,then we redirect to "/" page.
+    useEffect((accessToken) => {
+      console.log(accessToken);
       if (!accessToken) {
-        Router.replace("/");
-      } else {
-        // we call the api that verifies the token.
-        const data = await verifyToken(accessToken);
-        // if token was verified we set the state.
-        if (data.verified) {
-          setVerified(data.verified);
-        } else {
-          // If the token was fraud we first remove it from localStorage and then redirect to "/"
-          localStorage.removeItem("accessToken");
-          Router.replace("/");
-        }
+        Router.replace("/login");
       }
     }, []);
 
-    if (verified) {
+    if (verifyToken(accessToken)) {
       return <WrappedComponent {...props} />;
     } else {
-      return null;
+      Router.replace("/login");
     }
   };
 };

@@ -17,7 +17,8 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
-import { useStore, useToken } from "../src/store";
+import { useStore } from "../src/store/user";
+import { useToken } from "../src/store/token";
 import { fetcher } from "../src/utils/fetcher";
 import jwt from "jsonwebtoken";
 
@@ -52,6 +53,7 @@ const Login = () => {
 
       addAccessToken(data.accessToken);
       addRefreshToken(data.refreshToken);
+
       const user = jwt.decode(data.accessToken);
       addUser(user);
 
@@ -60,7 +62,7 @@ const Login = () => {
         status: "success",
         description: "Please login with your credentials!!",
       });
-      // router.push("/profile");
+      router.push("/profile");
     } else {
       console.error(err);
 

@@ -25,7 +25,6 @@ export const fetcher = async ({ url, method, token = null, data = null }) => {
     }
 
     const resJson = await res.json();
-    console.table(resJson);
 
     return [resJson, res.ok ? null : resJson.error];
   } catch (err) {
