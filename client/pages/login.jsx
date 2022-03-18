@@ -52,7 +52,6 @@ const Login = () => {
       setPassword("");
 
       addAccessToken(data.accessToken);
-      addRefreshToken(data.refreshToken);
 
       const user = jwt.decode(data.accessToken);
       addUser(user);

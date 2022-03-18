@@ -1,5 +1,6 @@
 import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 
 const pages = {
@@ -9,6 +10,14 @@ const pages = {
 
 const Navbar = () => {
   const user = useStore((state) => state.user);
+
+  const logout = () => {
+    const removeUser = useStore((state) => state.removeUser);
+    const removeAccessToken = useToken((state) => state.removeAccessToken);
+
+    removeAccessToken();
+    removeUser();
+  };
 
   return (
     <HStack
@@ -43,7 +52,7 @@ const Navbar = () => {
           mr={{ base: 0, lg: 10 }}
         >
           {user ? (
-            <NextLink href="/" passHref>
+            <NextLink href="/" onClick={logout} passHref>
               <Link>
                 <Heading size="md">Logout</Heading>
               </Link>

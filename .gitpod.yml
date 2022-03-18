@@ -3,7 +3,9 @@ image:
 
 tasks:
   - name: setup
-    init: yarn
+    init: |
+      cd client
+      yarn
     command: yarn dev
 
 ports:
