@@ -1,12 +1,12 @@
-import { Box, CloseButton, Flex } from "@chakra-ui/react";
-import { FiHome, FiTrendingUp, FiCompass, CgProfile } from "react-icons/fi";
+import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { FiHome, FiTrendingUp, FiCompass, FiSettings } from "react-icons/fi";
 import { NavItem } from "./navItem";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
   { name: "Trending", icon: FiTrendingUp },
   { name: "Explore", icon: FiCompass },
-  { name: "Profile", icon: CgProfile },
+  { name: "Profile", icon: FiSettings },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {
@@ -15,19 +15,16 @@ export const SidebarContent = ({ onClose, ...rest }) => {
       bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
-      w={{ base: "full", md: 60 }}
+      w="5rem"
       pos="fixed"
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+      <Flex my="5rem" direction="column" alignContent="center" justifyContent="space-between">
+        {LinkItems.map((link,index) => (
+          <NavItem key={index} label={link.name} icon={link.icon} />
+        ))}
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
     </Box>
   );
 };

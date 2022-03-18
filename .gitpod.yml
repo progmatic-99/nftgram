@@ -6,6 +6,7 @@ tasks:
     init: |
       cd client
       yarn
+      yarn build
     command: yarn dev
 
 ports:

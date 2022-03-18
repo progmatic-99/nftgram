@@ -1,7 +1,9 @@
 import { Flex, Icon } from "@chakra-ui/react";
 import Link from "next/link";
+import { Tooltip } from '@chakra-ui/react'
 
-export const NavItem = ({ icon, children, ...rest }) => {
+export const NavItem = ({ label, icon, children, ...rest }) => {
+
   return (
     <Link
       href="#"
@@ -11,25 +13,32 @@ export const NavItem = ({ icon, children, ...rest }) => {
       <Flex
         align="center"
         p="4"
-        mx="4"
+        mx="3"
         borderRadius="lg"
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "base.secondary",
           color: "white",
+        }}
+        _active={{
+          bg: "purple.500"
         }}
         {...rest}
       >
         {icon && (
-          <Icon
-            mr="4"
-            fontSize="16"
-            _groupHover={{
-              color: "white",
-            }}
-            as={icon}
-          />
+          <Tooltip label={label} fontSize="md" bg="white" color="black">
+            <span>
+              <Icon
+                mr="4"
+                fontSize="24"
+                _groupHover={{
+                  color: "white",
+                }}
+                as={icon}
+              />
+            </span>
+          </Tooltip>
         )}
         {children}
       </Flex>
