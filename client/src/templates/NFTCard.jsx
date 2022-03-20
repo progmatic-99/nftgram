@@ -1,8 +1,17 @@
-import { Box, Image } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Image,
+  Link,
+  LinkBox,
+  LinkOverlay,
+  Text,
+} from "@chakra-ui/react";
+import { FaExternalLinkSquareAlt } from "react-icons/fa";
 
-export default function NFTCard({ name, img }) {
+export default function NFTCard({ name, desc, img, opensea, project }) {
   return (
-    <Box
+    <LinkBox
       maxW="sm"
       borderWidth="1px"
       borderColor="base.border"
@@ -11,17 +20,32 @@ export default function NFTCard({ name, img }) {
       shadow="lg"
     >
       <Image src={img} alt={name} />
-      <Box p="6">
+      <Box p="6" w="full">
+        <Box display="flex" alignItems="baseline" justifyContent="space-between">
+          <Badge borderRadius="full" px="2" bg="base.secondary" color="white">
+            OpenSea
+          </Badge>
+        </Box>
         <Box
-          mt="1"
-          fontWeight="semibold"
-          as="h6"
-          lineHeight="tight"
-          isTruncated
-        >
-          {name}
+            mt="2"
+            fontWeight="bold"
+          >
+            <LinkOverlay href={opensea} isExternal>
+              {name}
+            </LinkOverlay>
+        </Box>
+        {
+          desc && (
+            <Text mt="2" letterSpacing="wide" fontWeight="bold" fontSize="sm" noOfLines={2}>
+              {desc}
+            </Text>
+          )
+        }
+        <Box as='a' color="gray.600" display="flex" alignItems="center" mt="1" fontWeight="bold" href={project} isExternal>
+          <Text>Project</Text>
+          <FaExternalLinkSquareAlt mx="2" />
         </Box>
       </Box>
-    </Box>
+    </LinkBox>
   );
 }
