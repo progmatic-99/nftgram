@@ -21,16 +21,18 @@ const About = ({ assets }) => {
               name,
               image_url,
               id,
-              permalink: openseaLink,
-              external_link: projectLink,
+              permalink,
+              asset_contract,
+              description,
             }) => {
               return (
                 <NFTCard
+                  desc={description}
                   img={image_url}
                   name={name}
                   key={id}
-                  opensea={openseaLink}
-                  project={projectLink}
+                  opensea={permalink}
+                  project={asset_contract.external_link}
                 />
               );
             }

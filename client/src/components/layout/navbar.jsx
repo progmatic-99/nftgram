@@ -10,11 +10,10 @@ const pages = {
 
 const Navbar = () => {
   const user = useStore((state) => state.user);
+  const removeUser = useStore((state) => state.removeUser);
+  const removeAccessToken = useToken((state) => state.removeAccessToken);
 
   const logout = () => {
-    const removeUser = useStore((state) => state.removeUser);
-    const removeAccessToken = useToken((state) => state.removeAccessToken);
-
     removeAccessToken();
     removeUser();
   };
