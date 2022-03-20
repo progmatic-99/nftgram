@@ -16,9 +16,25 @@ const About = ({ assets }) => {
       </Heading>
       <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
         {assets.map(({ assets }) => {
-          return assets.map(({ name, image_url, id }) => {
-            return <NFTCard img={image_url} name={name} key={id} />;
-          });
+          return assets.map(
+            ({
+              name,
+              image_url,
+              id,
+              permalink: openseaLink,
+              external_link: projectLink,
+            }) => {
+              return (
+                <NFTCard
+                  img={image_url}
+                  name={name}
+                  key={id}
+                  opensea={openseaLink}
+                  project={projectLink}
+                />
+              );
+            }
+          );
         })}
       </SimpleGrid>
     </Container>
