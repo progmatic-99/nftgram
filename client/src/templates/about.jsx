@@ -14,6 +14,7 @@ const About = ({ assets }) => {
       >
         Browse plethora of NFTs...
       </Heading>
+
       <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
         {assets.map(({ assets }) => {
           return assets.map(

@@ -5,12 +5,12 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Link,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import NextLink from "next/link";
+import Image from "next/image";
 import React from "react";
 
 export const Main = () => {
