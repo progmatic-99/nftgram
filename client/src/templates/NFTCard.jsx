@@ -31,7 +31,11 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
           </Badge>
         </Box>
         <Box mt="2" fontWeight="bold">
-          <LinkOverlay href={opensea} isExternal>
+          <LinkOverlay
+            href={opensea}
+            _hover={{ color: "base.secondary" }}
+            isExternal
+          >
             {name}
           </LinkOverlay>
         </Box>

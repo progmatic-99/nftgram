@@ -50,13 +50,14 @@ const Navbar = () => {
           spacing={{ base: 6, md: 4 }}
           mr={{ base: 0, lg: 10 }}
         >
-          {user ? (
+          {user && (
             <NextLink href="/" onClick={logout} passHref>
               <Link>
                 <Heading size="md">Logout</Heading>
               </Link>
             </NextLink>
-          ) : (
+          )}
+          {!user &&
             Object.entries(pages).map(([route, value], index) => {
               return (
                 <NextLink href={route} key={index} passHref>
@@ -65,8 +66,7 @@ const Navbar = () => {
                   </Link>
                 </NextLink>
               );
-            })
-          )}
+            })}
         </HStack>
       </Container>
     </HStack>

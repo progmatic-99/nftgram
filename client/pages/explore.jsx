@@ -1,20 +1,27 @@
-import React, { useState } from "react";
-import Collection from "../src/components/collection";
+import { Button, Container, SimpleGrid } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import NFTCard from "../src/templates/NFTCard";
 
-const Explore = ({ data }) => {
+const Explore = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  setPosts((prevPosts) => [...prevPosts, ...data.bundles]);
+  const [nextPage, setNextPage] = useState("");
 
-  const loadMore = async () => {
+  const loadMore = async (cursor = "") => {
+    const URL =
+      "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=9&include_orders=false";
+    if (cursor) {
+      URL = URL + `&cursor=${cursor}`;
+    }
     try {
-      const data = await fetch(
-        "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=10&include_orders=false",
-        { method: "GET" }
-      ).then((res) => res.json());
+      const data = await fetch(URL, { method: "GET" }).then((res) =>
+        res.json()
+      );
+      const cursor = data.next;
 
-      setPosts((prevPosts) => [...prevPosts, ...data.bundles]);
+      setNextPage(cursor);
+      setPosts((prevPosts) => [...prevPosts, ...data.assets]);
     } catch (err) {
       setErrMsg(err);
     } finally {
@@ -22,24 +29,42 @@ const Explore = ({ data }) => {
     }
   };
 
+  useEffect(() => {
+    loadMore();
+  }, []);
+
   return (
-    <>
-      <Collection bundles={posts.assets} />
+    <Container maxW="container.lg" p={8} centerContent>
       {errMsg && <p>{errMsg}</p>}
-      <button onClick={loadMore}>
+      <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
+        {posts.map(
+          (
+            { name, image_url, permalink, asset_contract, description },
+            index
+          ) => {
+            return (
+              <NFTCard
+                desc={description}
+                img={image_url}
+                name={name}
+                key={index}
+                opensea={permalink}
+                project={asset_contract.external_link}
+              />
+            );
+          }
+        )}
+      </SimpleGrid>
+      <Button
+        variant="secondary"
+        onClick={() => loadMore(nextPage)}
+        mt={6}
+        alignSelf="center"
+      >
         {isLoading ? "Loading...." : "Load More!!"}
-      </button>
-    </>
+      </Button>
+    </Container>
   );
 };
 
 export default Explore;
-
-export async function getStaticProps() {
-  const data = await fetch(
-    "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=8&include_orders=false",
-    { method: "GET" }
-  ).then((res) => res.json());
-
-  return { props: { data }, revalidate: 60 * 60 * 1000 };
-}
