@@ -6,7 +6,6 @@ import {
   LinkOverlay,
   Text,
 } from "@chakra-ui/react";
-import Image from "next/image";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {

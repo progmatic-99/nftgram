@@ -1,45 +1,45 @@
-import { useState } from "react";
-import useVirtual from "react-cool-virtual";
+import React, { useState } from "react";
+import Collection from "../src/components/collection";
 
-const loadData = async ({ loadIndex }, setData) => {
-  // Set the state of a batch items as `true`
-  // to avoid the callback from being invoked repeatedly
-  isItemLoadedArr[loadIndex] = true;
+const Explore = ({ data }) => {
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
+  setPosts((prevPosts) => [...prevPosts, ...data.bundles]);
 
-  try {
-    const { bundles: data } = await fetch(
-      "https://api.opensea.io/api/v1/bundles?limit=2&offset=0"
-    ).then((res) => res.json());
+  const loadMore = async () => {
+    try {
+      const data = await fetch(
+        "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=10&include_orders=false",
+        { method: "GET" }
+      ).then((res) => res.json());
 
-    setData((prevData) => [...prevData, ...data]);
-  } catch (err) {
-    console.error(err);
-    loadData({ loadIndex }, setData);
-  }
-};
-
-export default Explore = () => {
-  const [data, setData] = useState([]);
-  const { outerRef, innerRef, data } = useVirtual({
-    loadMore: (e) => loadData(e, setData),
-  });
+      setPosts((prevPosts) => [...prevPosts, ...data.bundles]);
+    } catch (err) {
+      setErrMsg(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div
-      style={{ width: "300px", height: "500px", overflow: "auto" }}
-      ref={outerRef}
-    >
-      <div ref={innerRef}>
-        {data.map(({ index, measureRef }) => (
-          <div
-            key={data[index]?.id || `fb-${index}`}
-            style={{ padding: "16px", minHeight: "122px" }}
-            ref={measureRef} // Used to measure the unknown item size
-          >
-            {data[index]?.body || "⏳ Loading..."}
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <Collection bundles={posts.assets} />
+      {errMsg && <p>{errMsg}</p>}
+      <button onClick={loadMore}>
+        {isLoading ? "Loading...." : "Load More!!"}
+      </button>
+    </>
   );
 };
+
+export default Explore;
+
+export async function getStaticProps() {
+  const data = await fetch(
+    "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=8&include_orders=false",
+    { method: "GET" }
+  ).then((res) => res.json());
+
+  return { props: { data }, revalidate: 60 * 60 * 1000 };
+}

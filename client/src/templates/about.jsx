@@ -1,6 +1,6 @@
-import { Container, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Container, Heading } from "@chakra-ui/react";
 import React from "react";
-import NFTCard from "./NFTCard";
+import Collection from "../components/collection";
 
 const About = ({ assets }) => {
   return (
@@ -15,31 +15,7 @@ const About = ({ assets }) => {
         Browse plethora of NFTs...
       </Heading>
 
-      <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
-        {assets.map(({ assets }) => {
-          return assets.map(
-            ({
-              name,
-              image_url,
-              id,
-              permalink,
-              asset_contract,
-              description,
-            }) => {
-              return (
-                <NFTCard
-                  desc={description}
-                  img={image_url}
-                  name={name}
-                  key={id}
-                  opensea={permalink}
-                  project={asset_contract.external_link}
-                />
-              );
-            }
-          );
-        })}
-      </SimpleGrid>
+      <Collection bundles={assets} />
     </Container>
   );
 };

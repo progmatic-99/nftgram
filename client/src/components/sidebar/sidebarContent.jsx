@@ -4,7 +4,6 @@ import { NavItem } from "./navItem";
 
 const LinkItems = [
   { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
   { name: "Explore", icon: FiCompass },
   { name: "Profile", icon: FiSettings },
 ];
@@ -20,8 +19,13 @@ export const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex my="5rem" direction="column" alignContent="center" justifyContent="space-between">
-        {LinkItems.map((link,index) => (
+      <Flex
+        my="5rem"
+        direction="column"
+        alignContent="center"
+        justifyContent="space-between"
+      >
+        {LinkItems.map((link, index) => (
           <NavItem key={index} label={link.name} icon={link.icon} />
         ))}
       </Flex>
