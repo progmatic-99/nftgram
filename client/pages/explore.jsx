@@ -36,18 +36,22 @@ const Explore = () => {
   return (
     <Container maxW="container.lg" p={8} centerContent>
       {errMsg && <p>{errMsg}</p>}
+      {isLoading && (
+        <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
+          <Skeleton h="300px" w="300px" />
+          <Skeleton h="300px" w="300px" />
+          <Skeleton h="300px" w="300px" />
+        </SimpleGrid>
+      )}
       <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
         {posts.map(
-          (
-            { name, image_url, permalink, asset_contract, description },
-            index
-          ) => {
+          ({ name, id, image_url, permalink, asset_contract, description }) => {
             return (
               <NFTCard
                 desc={description}
                 img={image_url}
                 name={name}
-                key={index}
+                key={id}
                 opensea={permalink}
                 project={asset_contract.external_link}
               />
