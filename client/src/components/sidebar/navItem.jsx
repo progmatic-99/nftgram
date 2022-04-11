@@ -2,11 +2,11 @@ import { Flex, Icon } from "@chakra-ui/react";
 import Link from "next/link";
 import { Tooltip } from '@chakra-ui/react'
 
-export const NavItem = ({ label, icon, children, ...rest }) => {
+export const NavItem = ({ label, icon, children, route, ...rest }) => {
 
   return (
     <Link
-      href="#"
+      href={route}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >

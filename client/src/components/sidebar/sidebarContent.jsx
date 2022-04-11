@@ -3,9 +3,9 @@ import { FiHome, FiTrendingUp, FiCompass, FiSettings } from "react-icons/fi";
 import { NavItem } from "./navItem";
 
 const LinkItems = [
-  { name: "Home", icon: FiHome },
-  { name: "Explore", icon: FiCompass },
-  { name: "Profile", icon: FiSettings },
+  { name: "Home", route: "/home", icon: FiHome },
+  { name: "Explore", route: "/explore", icon: FiCompass },
+  { name: "Profile", route: "/profile", icon: FiSettings },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {
@@ -26,7 +26,7 @@ export const SidebarContent = ({ onClose, ...rest }) => {
         justifyContent="space-between"
       >
         {LinkItems.map((link, index) => (
-          <NavItem key={index} label={link.name} icon={link.icon} />
+          <NavItem key={index} label={link.name} icon={link.icon} route={link.route} />
         ))}
       </Flex>
     </Box>

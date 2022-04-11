@@ -1,4 +1,4 @@
-import { Button, Container, SimpleGrid } from "@chakra-ui/react";
+import { Button, Container, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import NFTCard from "../src/templates/NFTCard";
 

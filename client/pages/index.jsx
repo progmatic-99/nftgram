@@ -4,7 +4,7 @@ import { Main } from "../src/templates/main";
 
 const Index = ({ data }) => {
   return (
-    <VStack minH="100vh" bg={useColorModeValue("gray.50", "gray.800")}>
+    <VStack minH="100vh" bg={useColorModeValue("gray.50")}>
       <Main />
       <About assets={data.bundles} />
     </VStack>
