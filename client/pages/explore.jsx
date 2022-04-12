@@ -1,5 +1,6 @@
-import { Button, Container, SimpleGrid, useColorModeValue } from "@chakra-ui/react";
+import { Button, Container, SimpleGrid } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import withAuth from "../src/components/withAuth";
 import NFTCard from "../src/templates/NFTCard";
 
 const Explore = () => {
@@ -71,4 +72,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default withAuth(Explore);

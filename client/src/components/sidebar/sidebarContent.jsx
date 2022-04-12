@@ -1,5 +1,5 @@
 import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
-import { FiHome, FiTrendingUp, FiCompass, FiSettings } from "react-icons/fi";
+import { FiHome, FiCompass, FiSettings } from "react-icons/fi";
 import { NavItem } from "./navItem";
 
 const LinkItems = [
@@ -26,7 +26,12 @@ export const SidebarContent = ({ onClose, ...rest }) => {
         justifyContent="space-between"
       >
         {LinkItems.map((link, index) => (
-          <NavItem key={index} label={link.name} icon={link.icon} route={link.route} />
+          <NavItem
+            key={index}
+            label={link.name}
+            icon={link.icon}
+            route={link.route}
+          />
         ))}
       </Flex>
     </Box>

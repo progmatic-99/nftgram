@@ -19,7 +19,7 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
       shadow="lg"
       isExternal
     >
-      <Image src={img} fallbackSrc="/logo.webp" alt={name} />
+      <Image src={img} fallbackSrc="/fallback.webp" alt={name} />
       <Box p="6" w="full">
         <Box
           display="flex"
