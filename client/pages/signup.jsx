@@ -21,7 +21,7 @@ import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { fetcher } from "../src/utils/fetcher";
 
-const wallets = [
+export const wallets = [
   { name: "MetaMask", img: "/metamask.webp" },
   { name: "Phantom", img: "/phantom.webp" },
 ];
@@ -97,7 +97,6 @@ export default function Signup() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
