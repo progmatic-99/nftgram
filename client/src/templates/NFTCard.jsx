@@ -7,6 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
+import { AiOutlineHeart } from "react-icons/ai";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
   return (
@@ -62,6 +63,9 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
         >
           <Text>Project</Text>
           <FaExternalLinkSquareAlt mx="2" />
+        </Box>
+        <Box mt="2">
+          <AiOutlineHeart />
         </Box>
       </Box>
     </LinkBox>
