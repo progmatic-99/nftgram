@@ -10,13 +10,14 @@ tasks:
   - name: Database
     init: |
       pg_start
+      psql -c "create database qrator;"
       gp sync-done db
-    command: psql -c "create database qrator;"
   - name: Server
     init: |
       gp sync-await db
       cd server
-    command: go run server.go
+      go build
+    command: ./server
 
 ports:
   - port: 3000
