@@ -1,24 +1,29 @@
 import {
   Badge,
   Box,
+  HStack,
+  IconButton,
   Image,
   LinkBox,
   LinkOverlay,
   Text,
+  Tooltip,
 } from "@chakra-ui/react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
-import AddToLike from "../components/addToLike";
+import { BiAddToQueue } from "react-icons/bi";
+import { useStore } from "../store/user";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
+  const user = useStore((state) => state.user);
+
   return (
-    <LinkBox
+    <Box
       maxW="sm"
       borderWidth="1px"
       borderColor="base.border"
       borderRadius="lg"
       overflow="hidden"
       shadow="lg"
-      isExternal
     >
       <Image src={img} fallbackSrc="/fallback.webp" alt={name} />
       <Box p="6" w="full">
@@ -31,7 +36,7 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
             OpenSea
           </Badge>
         </Box>
-        <Box mt="2" fontWeight="bold">
+        <LinkBox mt="2" fontWeight="bold">
           <LinkOverlay
             href={opensea}
             _hover={{ color: "base.secondary" }}
@@ -39,7 +44,7 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
           >
             {name}
           </LinkOverlay>
-        </Box>
+        </LinkBox>
         {desc && (
           <Text
             mt="2"
@@ -51,25 +56,36 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
             {desc}
           </Text>
         )}
-        <Box
-          as="a"
-          color="gray.600"
-          display="flex"
-          alignItems="center"
-          mt="1"
-          fontWeight="bold"
-          href={project}
-          isExternal
-        >
-          <Text>Project</Text>
-          <FaExternalLinkSquareAlt mx="2" />
-        </Box>
-        {user && (
-          <Box mt="2">
-            <AddToLike />
-          </Box>
-        )}
+        <HStack justifyContent="space-between" mt={2}>
+          <LinkBox
+            color="gray.600"
+            display="flex"
+            alignItems="center"
+            mt="1"
+            fontWeight="bold"
+          >
+            <LinkOverlay
+              href={project}
+              _hover={{ color: "base.secondary" }}
+              isExternal
+            >
+              Project
+            </LinkOverlay>
+            <FaExternalLinkSquareAlt mx="2" />
+          </LinkBox>
+
+          {user && (
+            <Tooltip label="Add to Liked Posts!!">
+              <IconButton
+                aria-label="Add to Liked Posts!!"
+                icon={<BiAddToQueue />}
+                variant="outline"
+                _hover={{ bgColor: "base.secondary", color: "white" }}
+              />
+            </Tooltip>
+          )}
+        </HStack>
       </Box>
-    </LinkBox>
+    </Box>
   );
 }

@@ -1,34 +1,13 @@
 import { Button, Container, SimpleGrid } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { Suspense, useEffect } from "react";
 import withAuth from "../src/components/withAuth";
-import NFTCard from "../src/templates/NFTCard";
+import usePosts from "../src/hooks/posts";
+import { Spinner } from "@chakra-ui/react";
+
+const NFTCard = React.lazy(() => import("../src/templates/NFTCard"));
 
 const Explore = () => {
-  const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
-  const [nextPage, setNextPage] = useState("");
-
-  const loadMore = async (cursor = "") => {
-    const URL =
-      "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=9&include_orders=false";
-    if (cursor) {
-      URL = URL + `&cursor=${cursor}`;
-    }
-    try {
-      const data = await fetch(URL, { method: "GET" }).then((res) =>
-        res.json()
-      );
-      const cursor = data.next;
-
-      setNextPage(cursor);
-      setPosts((prevPosts) => [...prevPosts, ...data.assets]);
-    } catch (err) {
-      setErrMsg(err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { posts, isLoading, errMsg, nextPage, loadMore } = usePosts();
 
   useEffect(() => {
     loadMore();
@@ -37,29 +16,28 @@ const Explore = () => {
   return (
     <Container maxW="container.lg" p={8} centerContent>
       {errMsg && <p>{errMsg}</p>}
-      {isLoading && (
-        <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
-          <Skeleton h="300px" w="300px" />
-          <Skeleton h="300px" w="300px" />
-          <Skeleton h="300px" w="300px" />
-        </SimpleGrid>
-      )}
+
       <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
         {posts.map(
           ({ name, id, image_url, permalink, asset_contract, description }) => {
             return (
-              <NFTCard
-                desc={description}
-                img={image_url}
-                name={name}
+              <Suspense
                 key={id}
-                opensea={permalink}
-                project={asset_contract.external_link}
-              />
+                fallback={<Spinner color="base.secondary" size="md" />}
+              >
+                <NFTCard
+                  desc={description}
+                  img={image_url}
+                  name={name}
+                  opensea={permalink}
+                  project={asset_contract.external_link}
+                />
+              </Suspense>
             );
           }
         )}
       </SimpleGrid>
+
       <Button
         variant="secondary"
         onClick={() => loadMore(nextPage)}
@@ -72,4 +50,4 @@ const Explore = () => {
   );
 };
 
-export default withAuth(Explore);
+export default Explore;

@@ -1,4 +1,4 @@
-import { useColorModeValue, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import About from "../src/templates/about";
 import { Main } from "../src/templates/main";
 
