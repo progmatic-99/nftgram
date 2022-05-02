@@ -9,9 +9,9 @@ import (
 )
 
 func (h handler) LikePost(c *gin.Context) {
-	var posts []map[string]interface{}
+	var post models.Post
 
-	if err := c.ShouldBindJSON(&posts); err != nil {
+	if err := c.ShouldBindJSON(&post); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
@@ -23,7 +23,8 @@ func (h handler) LikePost(c *gin.Context) {
 		return
 	}
 
-	if err := h.DB.Model(&models.User{}).Where("Email = ?", payload.(token.Payload).Email).Update("posts", posts).Error; err != nil {
+	err := h.DB.Model(&models.User{}).Where("Email = ?", payload.(token.Payload).Email).Update("posts", post).Error
+	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})

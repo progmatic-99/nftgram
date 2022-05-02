@@ -2,7 +2,6 @@ package main
 
 import (
 	"log"
-	"net/http"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -38,12 +37,6 @@ func main() {
 		AllowCredentials: true,
 	}))
 
-	r.GET("/hello", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "Hello world!!",
-		})
-		log.Println("/hello hit!!")
-	})
 	r.POST("/api/signup", h.CreateUser)
 	r.POST("/api/login", h.LoginUser)
 
