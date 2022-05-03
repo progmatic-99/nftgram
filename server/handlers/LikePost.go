@@ -32,6 +32,6 @@ func (h handler) LikePost(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusCreated, gin.H{
-		"msg": "Post added!!",
+		"msg": "Post added successfully!!",
 	})
 }

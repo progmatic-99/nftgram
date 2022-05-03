@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api";
+import { BASE_URL } from "./urls";
 
 export const fetcher = async ({ url, method, token = null, data = null }) => {
   try {
@@ -6,7 +6,6 @@ export const fetcher = async ({ url, method, token = null, data = null }) => {
     if (method === "GET") {
       res = await fetch(`${BASE_URL}/${url}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
           Accept: "application/json",
           Origin: "http://localhost:3000/",
         },
@@ -15,6 +14,7 @@ export const fetcher = async ({ url, method, token = null, data = null }) => {
     } else {
       res = await fetch(`${BASE_URL}/${url}`, {
         headers: {
+          Authorization: `Bearer ${token}`,
           Accept: "application/json",
           Origin: "http://localhost:3000/",
           "Content-Type": "application/json",

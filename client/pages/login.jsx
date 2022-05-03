@@ -29,7 +29,6 @@ const Login = () => {
   const router = useRouter();
   const addUser = useStore((state) => state.addUser);
   const addAccessToken = useToken((state) => state.addAccessToken);
-  const addRefreshToken = useToken((state) => state.addRefreshToken);
 
   const toast = createStandaloneToast({
     duration: 3000,
@@ -74,11 +73,7 @@ const Login = () => {
   };
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"flex-start"}
-      justify={"center"}
-    >
+    <Flex minH={"100vh"} align={"flex-start"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>

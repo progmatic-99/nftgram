@@ -1,6 +1,7 @@
 import {
   Badge,
   Box,
+  createStandaloneToast,
   HStack,
   IconButton,
   Image,
@@ -12,9 +13,40 @@ import {
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { BiAddToQueue } from "react-icons/bi";
 import { useStore } from "../store/user";
+import { useToken } from "../store/token";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
   const user = useStore((state) => state.user);
+  const token = useToken((state) => state.accessToken);
+  const toast = createStandaloneToast({
+    duration: 3000,
+    isClosable: true,
+    position: "bottom",
+  });
+
+  const addToLike = async ({ name, desc, img, opensea, project, token }) => {
+    const [data, err] = await fetcher("like", "POST", token, {
+      name: name,
+      desc: desc,
+      img: img,
+      opensea_link: opensea,
+      project_link: project,
+    });
+
+    if (data) {
+      toast({
+        title: "Done!!",
+        status: "success",
+        description: data.msg,
+      });
+    }
+
+    toast({
+      title: "Not able to add to Liked Posts!!",
+      status: "error",
+      description: err,
+    });
+  };
 
   return (
     <Box
@@ -77,9 +109,10 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
           {user && (
             <Tooltip label="Add to Liked Posts!!">
               <IconButton
-                aria-label="Add to Liked Posts!!"
+                aria-label="Like Button"
                 icon={<BiAddToQueue />}
                 variant="outline"
+                onClick={addToLike}
                 _hover={{ bgColor: "base.secondary", color: "white" }}
               />
             </Tooltip>

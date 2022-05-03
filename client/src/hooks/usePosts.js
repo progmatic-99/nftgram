@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { OPENSEA_URL } from "../utils/urls";
 
 export default function usePosts() {
   const [posts, setPosts] = useState([]);
@@ -7,8 +8,7 @@ export default function usePosts() {
   const [nextPage, setNextPage] = useState("");
 
   const loadMore = useCallback(async (cursor = "") => {
-    const URL =
-      "https://api.opensea.io/api/v1/assets?order_direction=desc&limit=9&include_orders=false";
+    const URL = `${OPENSEA_URL}assets?order_direction=desc&limit=9&include_orders=false`;
     if (cursor) {
       URL = URL + `&cursor=${cursor}`;
     }
