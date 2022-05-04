@@ -1,5 +1,6 @@
 import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
+import { useCallback } from "react";
 import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 
@@ -10,8 +11,10 @@ const pages = {
 
 const Navbar = () => {
   const user = useStore((state) => state.user);
-  const removeUser = useStore((state) => state.removeUser);
-  const removeAccessToken = useToken((state) => state.removeAccessToken);
+  const removeUser = useStore(useCallback((state) => state.removeUser, []));
+  const removeAccessToken = useToken(
+    useCallback((state) => state.removeAccessToken, [])
+  );
 
   const logout = () => {
     removeAccessToken();

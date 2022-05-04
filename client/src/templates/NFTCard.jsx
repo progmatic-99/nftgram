@@ -14,10 +14,11 @@ import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { BiAddToQueue } from "react-icons/bi";
 import { useStore } from "../store/user";
 import { useToken } from "../store/token";
+import { useCallback, useMemo } from "react";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
-  const user = useStore((state) => state.user);
-  const token = useToken((state) => state.accessToken);
+  const user = useStore(useCallback((state) => state.user, []));
+  const token = useToken(useCallback((state) => state.accessToken, []));
   const toast = createStandaloneToast({
     duration: 3000,
     isClosable: true,

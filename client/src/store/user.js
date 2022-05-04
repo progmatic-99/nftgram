@@ -7,4 +7,4 @@ const store = (set) => ({
   removeUser: () => set({ user: null }),
 });
 
-export const useStore = create(persist(store));
+export const useStore = create(persist(store, { name: "user" }));

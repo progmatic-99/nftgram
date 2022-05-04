@@ -4,16 +4,18 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../src/components/layout";
 import theme from "../src/theme";
 import "../style.css";
-import Sidebar from "../src/components/sidebar";
-import { useStore } from "../src/store/user";
 
 function MyApp({ Component, pageProps }) {
-  const user = useStore((state) => state.user);
-
   return (
     <ChakraProvider theme={theme}>
       <Layout>
-        <Component {...pageProps} />
+        {Component.Layout ? (
+          <Component.Layout>
+            <Component {...pageProps} />
+          </Component.Layout>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </Layout>
     </ChakraProvider>
   );

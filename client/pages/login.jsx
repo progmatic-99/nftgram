@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import {
   Flex,
   Heading,
@@ -27,8 +27,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const addUser = useStore((state) => state.addUser);
-  const addAccessToken = useToken((state) => state.addAccessToken);
+  const addUser = useStore(useCallback((state) => state.addUser, []));
+  const addAccessToken = useToken(
+    useCallback((state) => state.addAccessToken, [])
+  );
 
   const toast = createStandaloneToast({
     duration: 3000,

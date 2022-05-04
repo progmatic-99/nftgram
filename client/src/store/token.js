@@ -7,4 +7,4 @@ const tokenStore = (set) => ({
   removeAccessToken: () => set({ accessToken: null }),
 });
 
-export const useToken = create(persist(tokenStore));
+export const useToken = create(persist(tokenStore, { name: "token" }));

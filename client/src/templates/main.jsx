@@ -56,11 +56,12 @@ export const Main = () => {
         <VStack w="full" h="full" p={["8", "6", null, null]}>
           <Box w="full" h="full" align="center">
             <Image
+              boxShadow="dark-lg"
               w={["300px", "300px", "900px", "900px"]}
               h={["300px", "300px", "400px", "500px"]}
-              borderWidth="1px"
+              border="10px"
               borderRadius="2xl"
-              borderColor="base.border"
+              borderColor="black"
               src="/front.webp"
               alt="Front page NFT"
             />
