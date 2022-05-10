@@ -8,7 +8,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React, { Fragment } from "react";
+import React from "react";
 import withAuth from "../src/components/withAuth";
 import { useStore } from "../src/store/user";
 import { wallets } from "../pages/signup";

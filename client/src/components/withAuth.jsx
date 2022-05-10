@@ -9,17 +9,19 @@ const withAuth = (WrappedComponent) => {
     const accessToken = useToken((state) => state.accessToken);
 
     useEffect(() => {
-      if (!accessToken) {
-        Router.replace("/login");
-        return;
+      if (accessToken && verifyToken(accessToken)) {
+        return <WrappedComponent {...props} />;
       }
+
+      if (accessToken && !verifyToken(accessToken)) {
+        window.localStorage.clear("token");
+        window.localStorage.clear("user");
+      }
+
+      Router.replace("/login");
     }, []);
 
-    if (accessToken && verifyToken(accessToken)) {
-      return <WrappedComponent {...props} />;
-    } else {
-      return null;
-    }
+    return null;
   };
 };
 
