@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 const tokenStore = (set) => ({
   accessToken: null,
-  addAccessToken: (token) => set((state) => ({ accessToken: token })),
+  addAccessToken: (token) => set((state) => ({ accessToken: token }), true),
   removeAccessToken: () => set({ accessToken: null }),
 });
 

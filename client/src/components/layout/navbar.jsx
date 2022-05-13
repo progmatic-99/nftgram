@@ -1,6 +1,14 @@
-import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
+import {
+  Link,
+  HStack,
+  Image,
+  Container,
+  Heading,
+  Button,
+} from "@chakra-ui/react";
 import NextLink from "next/link";
-import { useCallback } from "react";
+import Router from "next/router";
+import { useCallback, useEffect, useState } from "react";
 import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 
@@ -10,15 +18,21 @@ const pages = {
 };
 
 const Navbar = () => {
+  const [hasMounted, setHasMounted] = useState(false);
   const user = useStore((state) => state.user);
   const removeUser = useStore(useCallback((state) => state.removeUser, []));
   const removeAccessToken = useToken(
     useCallback((state) => state.removeAccessToken, [])
   );
 
+  useEffect(() => {
+    setHasMounted(true);
+  }, []);
+
   const logout = () => {
     removeAccessToken();
     removeUser();
+    Router.push("/");
   };
 
   return (
@@ -47,20 +61,18 @@ const Navbar = () => {
             <Image w="60px" h="60px" alt="Qrator logo" src="/logo.webp" />
           </Link>
         </NextLink>
-        {/* <Spacer /> */}
         <HStack
           align="center"
           spacing={{ base: 6, md: 4 }}
           mr={{ base: 0, lg: 10 }}
         >
-          {user && (
-            <NextLink href="/" onClick={logout} passHref>
-              <Link>
-                <Heading size="md">Logout</Heading>
-              </Link>
-            </NextLink>
+          {hasMounted && user && (
+            <Button bgColor="white" onClick={logout}>
+              Logout
+            </Button>
           )}
-          {!user &&
+          {hasMounted &&
+            !user &&
             Object.entries(pages).map(([route, value], index) => {
               return (
                 <NextLink href={route} key={index} passHref>

@@ -53,4 +53,6 @@ const Explore = () => {
 
 export default withAuth(Explore);
 
-Explore.PageLayout = UserLayout;
+Explore.getLayout = function getLayout(page) {
+  return <UserLayout>{page}</UserLayout>;
+};

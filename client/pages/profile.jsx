@@ -44,6 +44,8 @@ const Profile = () => {
   );
 };
 
-Profile.Layout = UserLayout;
+Profile.getLayout = function getLayout(page) {
+  return <UserLayout>{page}</UserLayout>;
+};
 
 export default withAuth(Profile);

@@ -60,7 +60,7 @@ const Login = () => {
       toast({
         title: "Login succesfull!!",
         status: "success",
-        description: "Please login with your credentials!!",
+        description: "Browse your favourite NFTs!!",
       });
       router.push("/profile");
     } else {

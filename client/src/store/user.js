@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 const store = (set) => ({
   user: null,
-  addUser: (user) => set((state) => ({ user: user })),
+  addUser: (user) => set((state) => ({ user: user }), true),
   removeUser: () => set({ user: null }),
 });
 

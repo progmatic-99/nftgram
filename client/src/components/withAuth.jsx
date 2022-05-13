@@ -1,25 +1,32 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useToken } from "../store/token";
+import { useStore } from "../store/user";
 import { verifyToken } from "../utils/verifyToken";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
     const Router = useRouter();
-    const accessToken = useToken((state) => state.accessToken);
+    const accessToken = useToken(useCallback((state) => state.accessToken, []));
+
+    const removeUser = useStore(useCallback((state) => state.removeUser, []));
+    const removeAccessToken = useToken(
+      useCallback((state) => state.removeAccessToken, [])
+    );
 
     useEffect(() => {
-      if (accessToken && verifyToken(accessToken)) {
-        return <WrappedComponent {...props} />;
+      if (!accessToken) {
+        Router.replace("/login");
+        return;
       }
-
-      if (accessToken && !verifyToken(accessToken)) {
-        window.localStorage.clear("token");
-        window.localStorage.clear("user");
-      }
-
-      Router.replace("/login");
     }, []);
+
+    if (accessToken && verifyToken(accessToken)) {
+      return <WrappedComponent {...props} />;
+    } else if (!verifyToken(accessToken)) {
+      removeUser();
+      removeAccessToken();
+    }
 
     return null;
   };
