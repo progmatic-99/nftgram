@@ -4,18 +4,22 @@ import { ChakraProvider } from "@chakra-ui/react";
 import Layout from "../src/components/layout";
 import theme from "../src/theme";
 import "../style.css";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../src/components/errorFallback";
 
 function MyApp({ Component, pageProps }) {
+  const getLayout = Component.getLayout;
+  console.log(getLayout);
   return (
     <ChakraProvider theme={theme}>
       <Layout>
-        {Component.Layout ? (
-          <Component.Layout>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          {getLayout ? (
+            getLayout(<Component {...pageProps} />)
+          ) : (
             <Component {...pageProps} />
-          </Component.Layout>
-        ) : (
-          <Component {...pageProps} />
-        )}
+          )}
+        </ErrorBoundary>
       </Layout>
     </ChakraProvider>
   );
