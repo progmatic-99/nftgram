@@ -8,17 +8,11 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../src/components/errorFallback";
 
 function MyApp({ Component, pageProps }) {
-  const getLayout = Component.getLayout;
-  console.log(getLayout);
   return (
     <ChakraProvider theme={theme}>
       <Layout>
         <ErrorBoundary FallbackComponent={ErrorFallback}>
-          {getLayout ? (
-            getLayout(<Component {...pageProps} />)
-          ) : (
-            <Component {...pageProps} />
-          )}
+          <Component {...pageProps} />
         </ErrorBoundary>
       </Layout>
     </ChakraProvider>

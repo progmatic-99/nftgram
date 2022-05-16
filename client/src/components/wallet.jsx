@@ -1,4 +1,4 @@
-import { Box, Heading, Image, useToast, VStack } from "@chakra-ui/react";
+import { Box, Heading, Image, useToast } from "@chakra-ui/react";
 import React from "react";
 import { connectMetamask, connectPhantom } from "../src/api/login";
 

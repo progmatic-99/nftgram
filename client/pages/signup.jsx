@@ -16,22 +16,14 @@ import {
   createStandaloneToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { connectMetamask, connectPhantom } from "../src/api/login";
 import NextLink from "next/link";
 import { useRouter } from "next/router";
 import { fetcher } from "../src/utils/fetcher";
-
-export const wallets = [
-  { name: "MetaMask", img: "/metamask.webp" },
-  { name: "Phantom", img: "/phantom.webp" },
-];
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [metamaskId, setMetamaskId] = useState("");
-  const [phantomId, setPhantomId] = useState("");
   const router = useRouter();
 
   const toast = createStandaloneToast({
@@ -39,30 +31,6 @@ export default function Signup() {
     isClosable: true,
     position: "bottom",
   });
-
-  const connectWallet = async (name) => {
-    try {
-      if (name === "Metamask") {
-        const account = await connectMetamask();
-        setMetamaskId(account);
-      } else {
-        const account = await connectPhantom();
-        setPhantomId(account);
-      }
-
-      return toast({
-        title: `${name} Wallet Connected!!`,
-        status: "success",
-      });
-    } catch (err) {
-      console.error(err);
-      return toast({
-        title: "Connection failed!!",
-        status: "error",
-        description: `Please install ${name}!!`,
-      });
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,8 +40,6 @@ export default function Signup() {
       data: {
         email: email,
         password: password,
-        metamask_id: metamaskId,
-        phantom_id: phantomId,
       },
     });
     if (!err) {
@@ -93,11 +59,7 @@ export default function Signup() {
   };
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-    >
+    <Flex minH={"100vh"} align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
@@ -146,32 +108,6 @@ export default function Signup() {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              {wallets.map(({ name, img }, index) => {
-                return (
-                  <FormControl key={index}>
-                    <FormLabel>Connect your {name} wallet!</FormLabel>
-                    <InputGroup>
-                      <Box
-                        as="button"
-                        p={3}
-                        w="full"
-                        borderWidth="2px"
-                        borderColor="base.border"
-                        display="flex"
-                        key={name}
-                        justifyContent="space-between"
-                        alignItems="center"
-                        onClick={() => connectWallet(name)}
-                        _hover={{ shadow: "2xl", transform: "scale(1.1)" }}
-                        _focus={{ borderColor: "base.secondary" }}
-                      >
-                        <Image src={img} alt="Wallet Image" h="30px" w="30px" />
-                        <Heading size="sm">{name}</Heading>
-                      </Box>
-                    </InputGroup>
-                  </FormControl>
-                );
-              })}
               <Stack spacing={10} pt={2}>
                 <Button
                   loadingText="Submitting"

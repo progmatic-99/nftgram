@@ -68,7 +68,7 @@ const Navbar = () => {
         >
           {hasMounted && user && (
             <Button bgColor="white" onClick={logout}>
-              Logout
+              <Heading size="md">Logout</Heading>
             </Button>
           )}
           {hasMounted &&

@@ -10,10 +10,10 @@ export const verifyToken = (token) => {
     return false;
   }
 
-  const now = new Date().getMinutes();
-  const tokenExp = new Date(decoded.expiredAt).getMinutes();
+  const now = new Date().getDay();
+  const tokenExp = new Date(decoded.expiredAt).getDay();
 
-  if (tokenExp - now < 15) {
+  if (tokenExp - now === 1) {
     return true;
   }
 

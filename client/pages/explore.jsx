@@ -3,7 +3,6 @@ import React, { Suspense, useEffect } from "react";
 import withAuth from "../src/components/withAuth";
 import usePosts from "../src/hooks/usePosts";
 import { Spinner } from "@chakra-ui/react";
-import UserLayout from "../src/components/userLayout";
 
 const NFTCard = React.lazy(() => import("../src/templates/NFTCard"));
 
@@ -52,7 +51,3 @@ const Explore = () => {
 };
 
 export default withAuth(Explore);
-
-Explore.getLayout = function getLayout(page) {
-  return <UserLayout>{page}</UserLayout>;
-};

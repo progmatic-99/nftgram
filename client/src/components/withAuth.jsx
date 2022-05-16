@@ -3,6 +3,7 @@ import { useCallback, useEffect } from "react";
 import { useToken } from "../store/token";
 import { useStore } from "../store/user";
 import { verifyToken } from "../utils/verifyToken";
+import UserLayout from "./userLayout";
 
 const withAuth = (WrappedComponent) => {
   return (props) => {
@@ -22,7 +23,11 @@ const withAuth = (WrappedComponent) => {
     }, []);
 
     if (accessToken && verifyToken(accessToken)) {
-      return <WrappedComponent {...props} />;
+      return (
+        <UserLayout>
+          <WrappedComponent {...props} />
+        </UserLayout>
+      );
     } else if (!verifyToken(accessToken)) {
       removeUser();
       removeAccessToken();
