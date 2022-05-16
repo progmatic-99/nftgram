@@ -13,11 +13,9 @@ var (
 )
 
 type Payload struct {
-	Email      string    `json:"email"`
-	MetamaskID string    `json:"metamaskId"`
-	PhantomID  string    `json:"phantomId"`
-	CreatedAt  time.Time `json:"createdAt"`
-	ExpiredAt  time.Time `json:"expiredAt"`
+	Email     string    `json:"email"`
+	CreatedAt time.Time `json:"createdAt"`
+	ExpiredAt time.Time `json:"expiredAt"`
 }
 
 type RefreshPayload struct {
@@ -25,14 +23,12 @@ type RefreshPayload struct {
 	ExpiredAt time.Time `json:"expiredAt"`
 }
 
-func NewPayload(email string, metamaskId string, phantomId string, duration time.Duration) (*Payload, error) {
+func NewPayload(email string, duration time.Duration) (*Payload, error) {
 
 	payload := &Payload{
-		Email:      email,
-		MetamaskID: metamaskId,
-		PhantomID:  phantomId,
-		CreatedAt:  time.Now(),
-		ExpiredAt:  time.Now().Add(duration),
+		Email:     email,
+		CreatedAt: time.Now(),
+		ExpiredAt: time.Now().Add(duration),
 	}
 
 	return payload, nil

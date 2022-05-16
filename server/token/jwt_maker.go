@@ -23,8 +23,8 @@ func NewJWTMaker(secretKey string) (Maker, error) {
 	return &JWTMaker{secretKey}, nil
 }
 
-func (maker *JWTMaker) CreateToken(email string, metamaskId string, phantomId string, duration time.Duration) (string, error) {
-	payload, err := NewPayload(email, metamaskId, phantomId, duration)
+func (maker *JWTMaker) CreateToken(email string, duration time.Duration) (string, error) {
+	payload, err := NewPayload(email, duration)
 	if err != nil {
 		return "", err
 	}

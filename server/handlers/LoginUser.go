@@ -46,7 +46,7 @@ func (h handler) LoginUser(c *gin.Context) {
 		return
 	}
 
-	accessToken, err := h.tokenMaker.CreateToken(storedUser.Email, storedUser.MetamaskID, storedUser.PhantomID, h.TokenDuration)
+	accessToken, err := h.tokenMaker.CreateToken(storedUser.Email, h.TokenDuration)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err,
