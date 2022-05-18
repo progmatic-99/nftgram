@@ -15,9 +15,11 @@ import { BiAddToQueue } from "react-icons/bi";
 import { useStore } from "../store/user";
 import { useCallback } from "react";
 import { fetcher } from "../utils/fetcher";
+import { useToken } from "../store/token";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
   const user = useStore(useCallback((state) => state.user, []));
+  const token = useToken(useCallback((state) => state.accessToken, []));
   const toast = createStandaloneToast({
     duration: 3000,
     isClosable: true,
@@ -25,7 +27,7 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
   });
 
   const addToLike = async ({ name, desc, img, opensea, project, token }) => {
-    const [data, err] = await fetcher({
+    const data = await fetcher({
       url: "like",
       method: "POST",
       token: token,
@@ -38,18 +40,18 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
       },
     });
 
-    if (data) {
+    if (data?.error) {
       return toast({
-        title: "Done!!",
-        status: "success",
-        description: data.msg,
+        title: "Not able to add to Liked Posts!!",
+        status: "error",
+        description: data.error,
       });
     }
 
     return toast({
-      title: "Not able to add to Liked Posts!!",
-      status: "error",
-      description: err,
+      title: "Done!!",
+      status: "success",
+      description: data.msg,
     });
   };
 
@@ -117,7 +119,9 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
                 aria-label="Like Button"
                 icon={<BiAddToQueue />}
                 variant="outline"
-                onClick={addToLike}
+                onClick={() =>
+                  addToLike({ name, img, opensea, project, desc, token })
+                }
                 _hover={{ bgColor: "base.secondary", color: "white" }}
               />
             </Tooltip>

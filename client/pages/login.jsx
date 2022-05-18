@@ -53,7 +53,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [data, err] = await fetcher({
+    const data = await fetcher({
       url: "login",
       method: "POST",
       data: {
@@ -61,7 +61,16 @@ const Login = () => {
         password: password,
       },
     });
-    if (!err) {
+
+    if (data?.error) {
+      console.error(err);
+
+      toast({
+        title: "Login failed!!",
+        status: "error",
+        description: data.error,
+      });
+    } else {
       setEmail("");
       setPassword("");
 
@@ -76,14 +85,6 @@ const Login = () => {
         description: "Browse your favourite NFTs!!",
       });
       router.push("/profile");
-    } else {
-      console.error(err);
-
-      toast({
-        title: "Login failed!!",
-        status: "error",
-        description: err,
-      });
     }
   };
 

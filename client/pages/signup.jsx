@@ -34,7 +34,7 @@ export default function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const [data, err] = await fetcher({
+    const data = await fetcher({
       url: "signup",
       method: "POST",
       data: {
@@ -42,7 +42,7 @@ export default function Signup() {
         password: password,
       },
     });
-    if (!err) {
+    if (!data?.error) {
       router.push("/login");
       return toast({
         title: data.message,
@@ -53,7 +53,7 @@ export default function Signup() {
       return toast({
         title: "Account creation failed!!",
         status: "error",
-        description: err,
+        description: data.error,
       });
     }
   };
