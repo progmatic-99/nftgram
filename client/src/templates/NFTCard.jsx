@@ -13,12 +13,11 @@ import {
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
 import { BiAddToQueue } from "react-icons/bi";
 import { useStore } from "../store/user";
-import { useToken } from "../store/token";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
+import { fetcher } from "../utils/fetcher";
 
 export default function NFTCard({ name, desc, img, opensea, project }) {
   const user = useStore(useCallback((state) => state.user, []));
-  const token = useToken(useCallback((state) => state.accessToken, []));
   const toast = createStandaloneToast({
     duration: 3000,
     isClosable: true,
@@ -26,23 +25,28 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
   });
 
   const addToLike = async ({ name, desc, img, opensea, project, token }) => {
-    const [data, err] = await fetcher("like", "POST", token, {
-      name: name,
-      desc: desc,
-      img: img,
-      opensea_link: opensea,
-      project_link: project,
+    const [data, err] = await fetcher({
+      url: "like",
+      method: "POST",
+      token: token,
+      data: {
+        name: name,
+        desc: desc,
+        img: img,
+        opensea_link: opensea,
+        project_link: project,
+      },
     });
 
     if (data) {
-      toast({
+      return toast({
         title: "Done!!",
         status: "success",
         description: data.msg,
       });
     }
 
-    toast({
+    return toast({
       title: "Not able to add to Liked Posts!!",
       status: "error",
       description: err,

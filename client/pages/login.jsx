@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
   Flex,
   Heading,
@@ -31,6 +31,19 @@ const Login = () => {
   const addAccessToken = useToken(
     useCallback((state) => state.addAccessToken, [])
   );
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const addCredentials = useCallback(() => {
+    const defaultEmail = process.env.EMAIL;
+    const defaultPassword = process.env.PASS;
+
+    emailRef.current.value = defaultEmail;
+    passwordRef.current.value = defaultPassword;
+
+    setPassword(defaultPassword);
+    setEmail(defaultEmail);
+  }, []);
 
   const toast = createStandaloneToast({
     duration: 3000,
@@ -96,6 +109,7 @@ const Login = () => {
               <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
+                  ref={emailRef}
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -105,6 +119,7 @@ const Login = () => {
                 <FormLabel>Password</FormLabel>
                 <InputGroup>
                   <Input
+                    ref={passwordRef}
                     type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -124,7 +139,7 @@ const Login = () => {
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
-              <Stack spacing={10} pt={2}>
+              <Stack spacing={4} pt={2}>
                 <Button
                   loadingText="Submitting"
                   size="lg"
@@ -138,8 +153,21 @@ const Login = () => {
                 >
                   Log in
                 </Button>
+                <Button
+                  onClick={addCredentials}
+                  loadingText="Wait!!"
+                  size="lg"
+                  bg="gray.500"
+                  color="white"
+                  _hover={{
+                    bg: "white",
+                    color: "black",
+                  }}
+                >
+                  Use default login
+                </Button>
               </Stack>
-              <Stack pt={6}>
+              <Stack pt={4}>
                 <Text align={"center"}>
                   New here ?{" "}
                   <NextLink href="/signup" passHref>

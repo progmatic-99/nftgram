@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -16,6 +17,7 @@ const (
 
 func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		fmt.Println(c)
 		authorizationHeader := c.GetHeader(authorizationHeaderKey)
 		if len(authorizationHeader) == 0 {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
@@ -48,7 +50,7 @@ func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 		payload, err := tokenMaker.VerifyToken(accessToken)
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"error": "authorization header format is unsupported",
+				"error": err,
 			})
 
 			return
