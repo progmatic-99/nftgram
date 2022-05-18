@@ -23,7 +23,23 @@ func (h handler) LikePost(c *gin.Context) {
 		return
 	}
 
-	err := h.DB.Model(&models.User{}).Where("Email = ?", payload.(token.Payload).Email).Update("posts", post).Error
+	var storedUser models.User
+	if err := h.DB.First(&storedUser, "email = ?", payload.(*token.Payload).Email).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{
+			"error": "User not found!!",
+		})
+
+		return
+	}
+
+	err := h.DB.Model(&models.Post{}).Create(map[string]interface{}{
+		"Name":        post.Name,
+		"Description": post.Description,
+		"OpenseaLink": post.OpenseaLink,
+		"Img":         post.Img,
+		"ProjectLink": post.ProjectLink,
+		"UserID":      storedUser.ID,
+	}).Error
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
