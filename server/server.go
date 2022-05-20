@@ -42,6 +42,7 @@ func main() {
 
 	authRouter := r.Group("/").Use(authMiddleware(tokenMaker))
 	authRouter.POST("/api/like", h.LikePost)
+	authRouter.GET("/api/like", h.GetLikePosts)
 
 	// Start the server on 8080
 	r.Run()

@@ -23,10 +23,10 @@ func (h handler) LikePost(c *gin.Context) {
 		return
 	}
 
-	var storedUser models.User
-	if err := h.DB.First(&storedUser, "email = ?", payload.(*token.Payload).Email).Error; err != nil {
+	storedUser, userNotFound := h.GetUser(payload.(*token.Payload).Email)
+	if userNotFound != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"error": "User not found!!",
+			"error": userNotFound.Error(),
 		})
 
 		return

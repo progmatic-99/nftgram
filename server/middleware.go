@@ -17,7 +17,6 @@ const (
 func authMiddleware(tokenMaker token.Maker) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		authorizationHeader := c.GetHeader(authorizationHeaderKey)
-		log.Println(authorizationHeader)
 		if len(authorizationHeader) == 0 {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
 				"error": "authorization header is not provided",

@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/progmatic-99/nftgram/server/models"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -28,9 +27,8 @@ func (h handler) LoginUser(c *gin.Context) {
 		return
 	}
 
-	var storedUser models.User
-
-	if err := h.DB.First(&storedUser, "email = ?", string(user.Email)).Error; err != nil {
+	storedUser, userNotFound := h.GetUser(user.Email)
+	if userNotFound != nil {
 		c.JSON(http.StatusNotFound, gin.H{
 			"error": ErrEmailNotFound,
 		})
