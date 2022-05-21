@@ -17,7 +17,14 @@ import { useCallback } from "react";
 import { fetcher } from "../utils/fetcher";
 import { useToken } from "../store/token";
 
-export default function NFTCard({ name, desc, img, opensea, project }) {
+export default function NFTCard({
+  name,
+  desc,
+  img,
+  opensea,
+  project,
+  marketplace = "OpenSea",
+}) {
   const user = useStore(useCallback((state) => state.user, []));
   const token = useToken(useCallback((state) => state.accessToken, []));
   const toast = createStandaloneToast({
@@ -72,12 +79,12 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
           justifyContent="space-between"
         >
           <Badge borderRadius="full" px="2" bg="base.secondary" color="white">
-            OpenSea
+            {marketplace}
           </Badge>
         </Box>
         <LinkBox mt="2" fontWeight="bold">
           <LinkOverlay
-            href={opensea}
+            href={opensea ? opensea : ""}
             _hover={{ color: "base.secondary" }}
             isExternal
           >
@@ -96,22 +103,24 @@ export default function NFTCard({ name, desc, img, opensea, project }) {
           </Text>
         )}
         <HStack justifyContent="space-between" mt={2}>
-          <LinkBox
-            color="gray.600"
-            display="flex"
-            alignItems="center"
-            mt="1"
-            fontWeight="bold"
-          >
-            <LinkOverlay
-              href={project}
-              _hover={{ color: "base.secondary" }}
-              isExternal
+          {project && (
+            <LinkBox
+              color="gray.600"
+              display="flex"
+              alignItems="center"
+              mt="1"
+              fontWeight="bold"
             >
-              Project
-            </LinkOverlay>
-            <FaExternalLinkSquareAlt mx="2" />
-          </LinkBox>
+              <LinkOverlay
+                href={project}
+                _hover={{ color: "base.secondary" }}
+                isExternal
+              >
+                Project
+              </LinkOverlay>
+              <FaExternalLinkSquareAlt mx="2" />
+            </LinkBox>
+          )}
 
           {user && (
             <Tooltip label="Add to Liked Posts!!">

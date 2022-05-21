@@ -35,7 +35,6 @@ export const fetcher = async ({ url, method, token = null, data = null }) => {
   }
 
   const resJson = await res.json();
-  console.log(resJson);
 
   return resJson;
 };

@@ -1,15 +1,5 @@
-import {
-  Link,
-  HStack,
-  Image,
-  Container,
-  Heading,
-  Button,
-} from "@chakra-ui/react";
+import { Link, HStack, Image, Container, Heading } from "@chakra-ui/react";
 import NextLink from "next/link";
-import Router from "next/router";
-import { useCallback, useEffect, useState } from "react";
-import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 
 const pages = {
@@ -18,22 +8,7 @@ const pages = {
 };
 
 const Navbar = () => {
-  const [hasMounted, setHasMounted] = useState(false);
   const user = useStore((state) => state.user);
-  const removeUser = useStore(useCallback((state) => state.removeUser, []));
-  const removeAccessToken = useToken(
-    useCallback((state) => state.removeAccessToken, [])
-  );
-
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  const logout = () => {
-    removeAccessToken();
-    removeUser();
-    Router.push("/");
-  };
 
   return (
     <HStack
@@ -66,13 +41,7 @@ const Navbar = () => {
           spacing={{ base: 6, md: 4 }}
           mr={{ base: 0, lg: 10 }}
         >
-          {hasMounted && user && (
-            <Button bgColor="white" onClick={logout}>
-              <Heading size="md">Logout</Heading>
-            </Button>
-          )}
-          {hasMounted &&
-            !user &&
+          {!user &&
             Object.entries(pages).map(([route, value], index) => {
               return (
                 <NextLink href={route} key={index} passHref>

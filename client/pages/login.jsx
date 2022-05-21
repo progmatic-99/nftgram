@@ -62,15 +62,7 @@ const Login = () => {
       },
     });
 
-    if (data?.error) {
-      console.error(err);
-
-      toast({
-        title: "Login failed!!",
-        status: "error",
-        description: data.error,
-      });
-    } else {
+    if (data?.accessToken) {
       setEmail("");
       setPassword("");
 
@@ -85,6 +77,14 @@ const Login = () => {
         description: "Browse your favourite NFTs!!",
       });
       router.push("/profile");
+    } else {
+      console.error(err);
+
+      toast({
+        title: "Login failed!!",
+        status: "error",
+        description: data.error,
+      });
     }
   };
 

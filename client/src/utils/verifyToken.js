@@ -10,12 +10,8 @@ export const verifyToken = (token) => {
     return false;
   }
 
-  const now = new Date().getDay();
-  const tokenExp = new Date(decoded.expiredAt).getDay();
+  const now = new Date().getTime();
+  const tokenExp = new Date(decoded.expiredAt).getTime();
 
-  if (tokenExp - now === 1) {
-    return true;
-  }
-
-  return false;
+  return now < tokenExp;
 };

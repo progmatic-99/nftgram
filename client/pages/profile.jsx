@@ -18,9 +18,9 @@ const Profile = () => {
 
   const getPosts = useCallback(async () => {
     const data = await fetcher({ url: "like", method: "GET", token: token });
-    console.log(data);
+
     if (data?.posts) {
-      setPosts(data.posts);
+      setPosts((prevPosts) => [...prevPosts, ...data.posts]);
     } else {
       console.error(data?.error);
     }
@@ -35,7 +35,7 @@ const Profile = () => {
       <Heading size="md">Liked Posts</Heading>
       <VStack m={4}>
         <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
-          <Suspense fallback={<Spinner color="base.secondary" size="md" />}>
+          <Suspense fallback={<Spinner color="base.secondary" size="xl" />}>
             {posts.map(({ name, desc, img, project_link, opensea_link }) => {
               return (
                 <NFTCard
