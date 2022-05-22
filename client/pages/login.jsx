@@ -35,8 +35,8 @@ const Login = () => {
   const passwordRef = useRef();
 
   const addCredentials = useCallback(() => {
-    const defaultEmail = process.env.EMAIL;
-    const defaultPassword = process.env.PASS;
+    const defaultEmail = process.env.NEXT_PUBLIC_EMAIL;
+    const defaultPassword = process.env.NEXT_PUBLIC_PASS;
 
     emailRef.current.value = defaultEmail;
     passwordRef.current.value = defaultPassword;
