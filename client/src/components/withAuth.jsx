@@ -6,7 +6,7 @@ import { verifyToken } from "../utils/verifyToken";
 import UserLayout from "./userLayout";
 
 export default function withAuth(WrappedComponent) {
-  return (props) => {
+  return function display(props) {
     const Router = useRouter();
     const accessToken = useToken(useCallback((state) => state.accessToken, []));
 
