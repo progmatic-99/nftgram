@@ -6,7 +6,8 @@ import { verifyToken } from "../utils/verifyToken";
 import UserLayout from "./userLayout";
 
 export default function withAuth(WrappedComponent) {
-  return function display(props) {
+  // eslint-disable-next-line react/display-name
+  return (props) => {
     const Router = useRouter();
     const accessToken = useToken(useCallback((state) => state.accessToken, []));
 

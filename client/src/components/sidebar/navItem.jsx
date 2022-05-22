@@ -11,6 +11,7 @@ export const NavItem = ({ label, icon, children, route, ...rest }) => {
       href={route}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
+      passHref
     >
       <Flex
         align="center"
