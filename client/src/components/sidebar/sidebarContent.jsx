@@ -1,5 +1,9 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
-import { FiHome, FiCompass, FiSettings } from "react-icons/fi";
+import { Box, Flex, IconButton, useColorModeValue } from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import { useCallback } from "react";
+import { FiHome, FiCompass, FiSettings, FiLogOut } from "react-icons/fi";
+import { useToken } from "../../store/token";
+import { useStore } from "../../store/user";
 import { NavItem } from "./navItem";
 
 const LinkItems = [
@@ -9,6 +13,19 @@ const LinkItems = [
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {
+  const router = useRouter();
+
+  const removeAccessToken = useToken(
+    useCallback((state) => state.removeAccessToken, [])
+  );
+  const removeUser = useStore(useCallback((state) => state.removeUser, []));
+
+  const logout = () => {
+    removeAccessToken();
+    removeUser();
+    router.push("/");
+  };
+
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}
@@ -33,6 +50,12 @@ export const SidebarContent = ({ onClose, ...rest }) => {
             route={link.route}
           />
         ))}
+        <IconButton
+          aria-label="Logout"
+          icon={FiLogOut}
+          bgColor="none"
+          onClick={logout}
+        />
       </Flex>
     </Box>
   );

@@ -1,8 +1,10 @@
 import { Flex, Icon } from "@chakra-ui/react";
 import Link from "next/link";
-import { Tooltip } from '@chakra-ui/react'
+import { Tooltip } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export const NavItem = ({ label, icon, children, route, ...rest }) => {
+  const router = useRouter();
 
   return (
     <Link
@@ -14,6 +16,7 @@ export const NavItem = ({ label, icon, children, route, ...rest }) => {
         align="center"
         p="4"
         mx="3"
+        bgColor={router.pathname === route ? "base.secondary" : ""}
         borderRadius="lg"
         role="group"
         cursor="pointer"
@@ -22,7 +25,7 @@ export const NavItem = ({ label, icon, children, route, ...rest }) => {
           color: "white",
         }}
         _active={{
-          bg: "purple.500"
+          bg: "purple.500",
         }}
         {...rest}
       >

@@ -3,8 +3,6 @@ import { OPENSEA_URL } from "../utils/urls";
 
 export default function usePosts() {
   const [posts, setPosts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errMsg, setErrMsg] = useState("");
   const [nextPage, setNextPage] = useState("");
 
   const loadMore = useCallback(async (cursor = "") => {
@@ -21,11 +19,9 @@ export default function usePosts() {
       setNextPage(cursor);
       setPosts((prevPosts) => [...prevPosts, ...data.assets]);
     } catch (err) {
-      setErrMsg(err);
-    } finally {
-      setIsLoading(false);
+      console.error(err);
     }
   }, []);
 
-  return { posts, isLoading, errMsg, nextPage, loadMore };
+  return { posts, nextPage, loadMore };
 }

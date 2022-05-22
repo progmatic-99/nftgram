@@ -14,11 +14,9 @@ const useRarible = (chain = "SOLANA") => {
     } catch (err) {
       console.error(err);
     }
-  }, [chain]);
+  }, []);
 
-  loadPosts();
-
-  return posts;
+  return { posts, loadPosts };
 };
 
 export default useRarible;
