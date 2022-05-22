@@ -24,9 +24,6 @@ export const NavItem = ({ label, icon, children, route, ...rest }) => {
           bg: "base.secondary",
           color: "white",
         }}
-        _active={{
-          bg: "purple.500",
-        }}
         {...rest}
       >
         {icon && (

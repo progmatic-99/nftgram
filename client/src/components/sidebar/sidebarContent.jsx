@@ -1,4 +1,10 @@
-import { Box, Flex, IconButton, useColorModeValue } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  IconButton,
+  Tooltip,
+  useColorModeValue,
+} from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { FiHome, FiCompass, FiSettings, FiLogOut } from "react-icons/fi";
@@ -50,12 +56,19 @@ export const SidebarContent = ({ onClose, ...rest }) => {
             route={link.route}
           />
         ))}
-        <IconButton
-          aria-label="Logout"
-          icon={FiLogOut}
-          bgColor="none"
-          onClick={logout}
-        />
+        <Tooltip label="Logout" fontSize="md" bg="white" color="black">
+          <IconButton
+            mt="4"
+            bgColor="white"
+            aria-label="Logout"
+            icon={<FiLogOut mr="4" fontSize="24" />}
+            _hover={{
+              bg: "base.secondary",
+              color: "white",
+            }}
+            onClick={logout}
+          />
+        </Tooltip>
       </Flex>
     </Box>
   );
