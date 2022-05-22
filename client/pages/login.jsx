@@ -148,7 +148,6 @@ const Login = () => {
                   bg="base.secondary"
                   color="base.primary"
                   _hover={{
-                    bg: "base.border",
                     color: "white",
                   }}
                 >

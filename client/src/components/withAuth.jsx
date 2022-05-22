@@ -5,7 +5,7 @@ import { useStore } from "../store/user";
 import { verifyToken } from "../utils/verifyToken";
 import UserLayout from "./userLayout";
 
-const withAuth = (WrappedComponent) => {
+export default function withAuth(WrappedComponent) {
   return (props) => {
     const Router = useRouter();
     const accessToken = useToken(useCallback((state) => state.accessToken, []));
@@ -35,6 +35,4 @@ const withAuth = (WrappedComponent) => {
 
     return null;
   };
-};
-
-export default withAuth;
+}
