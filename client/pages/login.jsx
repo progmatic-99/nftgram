@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Flex,
   Heading,
@@ -35,14 +35,30 @@ const Login = () => {
   const passwordRef = useRef();
 
   const addCredentials = useCallback(() => {
-    const defaultEmail = process.env.NEXT_PUBLIC_EMAIL;
-    const defaultPassword = process.env.NEXT_PUBLIC_PASS;
+    const env = process.env.NODE_ENV;
+    let defaultEmail, defaultPassword;
+
+    if (env === 'development') {
+      defaultEmail = process.env.EMAIL;
+      defaultPassword = process.env.PASS;
+    } else {
+      defaultEmail = process.env.NEXT_PUBLIC_EMAIL;
+      defaultPassword = process.env.NEXT_PUBLIC_PASS;
+    }
 
     emailRef.current.value = defaultEmail;
     passwordRef.current.value = defaultPassword;
 
     setPassword(defaultPassword);
     setEmail(defaultEmail);
+  }, []);
+
+  useEffect(() => {
+    toast({
+      title: "Login with default login!!",
+      status: "info",
+      description: "Please login with default creds!!",
+    });
   }, []);
 
   const toast = createStandaloneToast({

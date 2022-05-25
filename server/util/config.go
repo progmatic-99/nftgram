@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/spf13/viper"
@@ -14,11 +15,24 @@ type Config struct {
 }
 
 func LoadConfig(path string) (config Config, err error) {
+	viper.AutomaticEnv()
+	env := viper.GetString("env")
+	fmt.Println(env)
+
+	if env == "production" {
+		config := Config{
+			DBUrl:            viper.GetString("db_url"),
+			SecretKey:        viper.GetString("token_symmetric_key"),
+			SecretRefreshKey: viper.GetString("refresh_token"),
+			TokenDuration:    viper.GetDuration("access_token_duration"),
+		}
+
+		return config, nil
+	}
+
 	viper.AddConfigPath(path)
 	viper.SetConfigName("app")
 	viper.SetConfigType("env")
-
-	viper.AutomaticEnv()
 
 	err = viper.ReadInConfig()
 	if err != nil {

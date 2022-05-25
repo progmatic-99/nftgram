@@ -3,7 +3,6 @@ import NextLink from "next/link";
 import { useStore } from "../../store/user";
 
 const pages = {
-  "/signup": "Signup",
   "/login": "Login",
 };
 
