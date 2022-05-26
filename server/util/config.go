@@ -1,7 +1,6 @@
 package util
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/spf13/viper"
@@ -17,7 +16,6 @@ type Config struct {
 func LoadConfig(path string) (config Config, err error) {
 	viper.AutomaticEnv()
 	env := viper.GetString("env")
-	fmt.Println(env)
 
 	if env == "production" {
 		config := Config{
