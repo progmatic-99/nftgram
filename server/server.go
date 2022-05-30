@@ -27,11 +27,9 @@ func main() {
 	h := handlers.New(DB, tokenMaker, config.TokenDuration)
 
 	r := gin.Default()
-	// corsConfig := cors.DefaultConfig()
-	// corsConfig.AllowOrigins = []string{"http://127.0.0.1"}
 
 	r.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"http://localhost:3000"},
+		AllowOrigins:     []string{"http://localhost:3000", "https://qrator.netlify.app"},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Origin", "Authorization", "Accept", "Content-Type"},
 		AllowCredentials: true,
