@@ -11,9 +11,9 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { FaExternalLinkSquareAlt } from "react-icons/fa";
-import { BiAddToQueue } from "react-icons/bi";
+import { AiFillLike, AiOutlineLike } from "react-icons/ai";
 import { useStore } from "../store/user";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { fetcher } from "../utils/fetcher";
 import { useToken } from "../store/token";
 
@@ -32,8 +32,10 @@ export default function NFTCard({
     isClosable: true,
     position: "bottom",
   });
+  const [liked, setLiked] = useState(false);
 
   const addToLike = async ({ name, desc, img, opensea, project, token }) => {
+    setLiked(true);
     const data = await fetcher({
       url: "like",
       method: "POST",
@@ -123,10 +125,12 @@ export default function NFTCard({
           )}
 
           {user && (
-            <Tooltip label="Add to Liked Posts!!">
+            <Tooltip label="Appreciate this post!!">
               <IconButton
                 aria-label="Like Button"
-                icon={<BiAddToQueue />}
+                icon={
+                  liked ? <AiFillLike /> : <AiOutlineLike fontSize="22px" />
+                }
                 variant="outline"
                 onClick={() =>
                   addToLike({ name, img, opensea, project, desc, token })

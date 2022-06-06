@@ -17,7 +17,7 @@ export const Main = () => {
   return (
     <Container maxW="container.lg" p={0}>
       <Flex
-        h="100vh"
+        maxH="100vh"
         align="center"
         direction={["column-reverse", "column-reverse", "row", "row"]}
       >
@@ -29,7 +29,9 @@ export const Main = () => {
           px={["12", "10", null, null]}
           spacing={["6", "8"]}
         >
-          <Heading size="4xl">Qrator</Heading>
+          <Heading size="4xl" variant="appName">
+            Qrator
+          </Heading>
           <Text color="gray.500" fontWeight="bold" fontSize="lg" noOfLines={4}>
             Instagram for NFT creators & lovers!!
             <br />

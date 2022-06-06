@@ -6,13 +6,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
-import withAuth from "../src/components/withAuth";
-import { useToken } from "../src/store/token";
-import { fetcher } from "../src/utils/fetcher";
+import { useToken } from "../../store/token";
+import { fetcher } from "../../utils/fetcher";
 
-const NFTCard = React.lazy(() => import("../src/templates/NFTCard"));
+const NFTCard = React.lazy(() => import("../../templates/NFTCard"));
 
-const Profile = () => {
+const Details = () => {
   const token = useToken(useCallback((state) => state.accessToken, []));
   const [posts, setPosts] = useState([]);
 
@@ -31,10 +30,10 @@ const Profile = () => {
   }, []);
 
   return (
-    <Container maxW="container.lg" h="100vh" pt={6}>
-      <Heading size="md">Liked Posts</Heading>
+    <Container maxW="container.lg" pt={6}>
+      <Heading color="black">Liked Posts</Heading>
       <VStack m={4}>
-        <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 4, md: 10 }}>
           <Suspense fallback={<Spinner color="base.secondary" size="xl" />}>
             {posts.map(({ name, desc, img, project_link, opensea_link }) => {
               return (
@@ -55,4 +54,4 @@ const Profile = () => {
   );
 };
 
-export default withAuth(Profile);
+export default Details;

@@ -10,7 +10,8 @@ const About = ({ assets }) => {
         fontWeight="light"
         textAlign="center"
         textColor="base.primary"
-        pb={8}
+        pt={16}
+        pb={12}
       >
         Browse plethora of NFTs...
       </Heading>

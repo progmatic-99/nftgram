@@ -37,10 +37,13 @@ func main() {
 
 	r.POST("/api/signup", h.CreateUser)
 	r.POST("/api/login", h.LoginUser)
+	r.GET("/api/wallets", h.GetWallets)
 
 	authRouter := r.Group("/").Use(authMiddleware(tokenMaker))
 	authRouter.POST("/api/like", h.LikePost)
 	authRouter.GET("/api/like", h.GetLikePosts)
+	authRouter.POST("/api/wallet", h.AddWallet)
+	authRouter.GET("/api/wallet", h.GetUserWallet)
 
 	// Start the server on 8080
 	r.Run()

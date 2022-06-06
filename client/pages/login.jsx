@@ -38,7 +38,7 @@ const Login = () => {
     const env = process.env.NODE_ENV;
     let defaultEmail, defaultPassword;
 
-    if (env === 'development') {
+    if (env === "development") {
       defaultEmail = process.env.EMAIL;
       defaultPassword = process.env.PASS;
     } else {
@@ -92,7 +92,8 @@ const Login = () => {
         status: "success",
         description: "Browse your favourite NFTs!!",
       });
-      router.push("/profile");
+
+      router.push("/home");
     } else {
       console.error(err);
 
@@ -105,7 +106,7 @@ const Login = () => {
   };
 
   return (
-    <Flex minH={"100vh"} align={"flex-start"} justify={"center"}>
+    <Flex maxH={"100vh"} align={"flex-start"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
@@ -158,7 +159,6 @@ const Login = () => {
               </FormControl>
               <Stack spacing={4} pt={2}>
                 <Button
-                  loadingText="Submitting"
                   size="lg"
                   type="submit"
                   bg="base.secondary"

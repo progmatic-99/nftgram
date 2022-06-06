@@ -60,6 +60,23 @@ const theme = extendTheme({
         },
       },
     },
+    Heading: {
+      baseStyle: {
+        bgClip: "text",
+        fontWeight: "extrabold",
+      },
+      variants: {
+        sol: {
+          bgGradient: "linear(to-r, #56B9BE, #856CCA, #CB7BDC)",
+        },
+        eth: {
+          bgGradient: "linear(to-r, #FEED5B, #F48067, #A85CA5, #242220)",
+        },
+        appName: {
+          bgGradient: "linear(to-r, #EF972C, #FF0080)",
+        },
+      },
+    },
   },
 });
 
