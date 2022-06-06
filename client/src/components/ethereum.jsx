@@ -1,4 +1,4 @@
-import { Button, SimpleGrid, Spinner } from "@chakra-ui/react";
+import { Button, Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
 import React, { Suspense, useEffect } from "react";
 import usePosts from "../hooks/usePosts";
 
@@ -12,8 +12,11 @@ const Ethereum = () => {
   }, []);
 
   return (
-    <>
-      <SimpleGrid columns={{ base: 2, md: 3 }} spacing={6}>
+    <VStack maxW="100vw" spacing={6}>
+      <Heading m={(8, 0, 8, 0)} variant="eth">
+        ETHEREUM
+      </Heading>
+      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 4, md: 10 }}>
         {posts.map(
           ({ name, id, image_url, permalink, asset_contract, description }) => {
             return (
@@ -42,7 +45,7 @@ const Ethereum = () => {
       >
         Load More!!
       </Button>
-    </>
+    </VStack>
   );
 };
 

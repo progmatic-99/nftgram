@@ -59,7 +59,7 @@ export default function Signup() {
   };
 
   return (
-    <Flex minH={"100vh"} align={"center"} justify={"center"}>
+    <Flex maxH={"100vh"} align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
