@@ -7,7 +7,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import { useCallback } from "react";
-import { FiHome, FiCompass, FiSettings, FiLogOut } from "react-icons/fi";
+import { FiHome, FiCompass, FiLogOut } from "react-icons/fi";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 import { NavItem } from "./navItem";
@@ -15,7 +16,7 @@ import { NavItem } from "./navItem";
 const LinkItems = [
   { name: "Home", route: "/home", icon: FiHome },
   { name: "Explore", route: "/explore", icon: FiCompass },
-  { name: "Profile", route: "/profile", icon: FiSettings },
+  { name: "Profile", route: "/notifs", icon: IoMdNotificationsOutline },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {
@@ -27,9 +28,9 @@ export const SidebarContent = ({ onClose, ...rest }) => {
   const removeUser = useStore(useCallback((state) => state.removeUser, []));
 
   const logout = () => {
+    router.push("/");
     removeAccessToken();
     removeUser();
-    router.push("/");
   };
 
   return (
