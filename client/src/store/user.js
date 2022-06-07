@@ -3,7 +3,7 @@ import { persist } from "zustand/middleware";
 
 const store = (set) => ({
   user: null,
-  addUser: async (user) => set(() => ({ user: user })),
+  addUser: (user) => set(() => ({ user: user })),
   removeUser: async () => set(() => ({ user: null })),
 });
 

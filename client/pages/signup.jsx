@@ -62,7 +62,7 @@ export default function Signup() {
     <Flex maxH={"100vh"} align={"center"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"} textAlign={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"} variant="base">
             Sign up
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>

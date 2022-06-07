@@ -1,10 +1,4 @@
-import {
-  Container,
-  Heading,
-  SimpleGrid,
-  Spinner,
-  VStack,
-} from "@chakra-ui/react";
+import { Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { useToken } from "../../store/token";
 import { fetcher } from "../../utils/fetcher";
@@ -19,7 +13,7 @@ const Details = () => {
     const data = await fetcher({ url: "like", method: "GET", token: token });
 
     if (data?.posts) {
-      setPosts((prevPosts) => [...prevPosts, ...data.posts]);
+      setPosts(() => [...data.posts]);
     } else {
       console.error(data?.error);
     }
@@ -30,11 +24,18 @@ const Details = () => {
   }, []);
 
   return (
-    <Container maxW="container.lg" pt={6}>
-      <Heading color="black">Liked Posts</Heading>
-      <VStack m={4}>
+    <VStack
+      pt={6}
+      pb={10}
+      align={{ base: "center", md: "flex-start" }}
+      spacing={4}
+    >
+      <Heading as="h3" variant="like">
+        Liked Posts
+      </Heading>
+      <VStack p={6} justify="center">
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 4, md: 10 }}>
-          <Suspense fallback={<Spinner color="base.secondary" size="xl" />}>
+          <Suspense fallback={<Spinner color="base.secondary" size="lg" />}>
             {posts.map(({ name, desc, img, project_link, opensea_link }) => {
               return (
                 <NFTCard
@@ -50,7 +51,7 @@ const Details = () => {
           </Suspense>
         </SimpleGrid>
       </VStack>
-    </Container>
+    </VStack>
   );
 };
 

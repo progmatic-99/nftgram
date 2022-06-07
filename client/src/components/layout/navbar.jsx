@@ -45,7 +45,9 @@ const Navbar = () => {
               return (
                 <NextLink href={route} key={index} passHref>
                   <Link>
-                    <Heading size="md">{value}</Heading>
+                    <Heading size="md" variant="base">
+                      {value}
+                    </Heading>
                   </Link>
                 </NextLink>
               );

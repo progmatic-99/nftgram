@@ -1,28 +1,21 @@
 import {
-  Alert,
-  AlertIcon,
   Button,
-  Container,
   createStandaloneToast,
   FormControl,
   FormLabel,
   Heading,
-  HStack,
   Input,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useToken } from "../../store/token";
-import { useStore } from "../../store/user";
 import { getWalletDetails } from "./wallet";
 
 const UserWallet = () => {
-  const user = useStore(useCallback((state) => state.user, []));
   const token = useToken(useCallback((state) => state.accessToken, []));
 
-  const [opensea, setOpensea] = useState(user.opensea ?? "");
-  const [rarible, setRarible] = useState(user.rarible ?? "");
+  const [opensea, setOpensea] = useState("");
+  const [rarible, setRarible] = useState("");
 
   const toast = createStandaloneToast({
     duration: 3000,
@@ -30,15 +23,17 @@ const UserWallet = () => {
     position: "bottom",
   });
 
-  useEffect(() => {
-    async function fetchDetails() {
-      const wallet = await getWalletDetails(token);
-      console.log(wallet);
-      setOpensea(wallet.opensea);
-      setRarible(wallet.rarible);
-    }
+  const fetchDetails = useCallback(async () => {
+    const wallet = await getWalletDetails(token);
+    console.log(wallet);
+    setOpensea(wallet.opensea);
+    setRarible(wallet.rarible);
+  }, []);
 
-    fetchDetails();
+  useEffect(() => {
+    if (opensea === "" || rarible === "") {
+      fetchDetails();
+    }
   }, []);
 
   async function addWallet(opensea, rarible, token) {
@@ -68,29 +63,16 @@ const UserWallet = () => {
   }
 
   return (
-    <Container maxW="container.lg" pt={8}>
-      <Alert
-        mt={4}
-        mb={6}
-        status="info"
-        variant="subtle"
-        boxSize="xl"
-        h="100px"
-        bg="gray.100"
-        borderRadius={8}
-      >
-        <AlertIcon color="base.primary" />
-        <Text noOfLines={2} fontWeight="bolder">
-          After you add your wallet, your NFTs will be available in the feed.
-          You can add any one or both wallets.
-        </Text>
-      </Alert>
+    <VStack
+      pt={{ base: 6, md: 8 }}
+      align={{ base: "center", md: "flex-start" }}
+    >
       <form onSubmit={() => addWallet(opensea, rarible, token)}>
-        <VStack spacing={6} align="flex-start">
-          <Heading size="xl" variant="appName">
+        <VStack spacing={6} p={3} justify="center">
+          <Heading as="h3" variant="appName">
             Add your wallets!!
           </Heading>
-          <HStack spacing={12}>
+          <VStack spacing={8}>
             <FormControl id="opensea" isRequired>
               <FormLabel fontWeight="bold">Opensea Wallet</FormLabel>
               <Input
@@ -107,7 +89,7 @@ const UserWallet = () => {
                 onChange={(e) => setRarible(e.target.value)}
               />
             </FormControl>
-          </HStack>
+          </VStack>
           <Button
             type="submit"
             bg="base.secondary"
@@ -120,7 +102,7 @@ const UserWallet = () => {
           </Button>
         </VStack>
       </form>
-    </Container>
+    </VStack>
   );
 };
 

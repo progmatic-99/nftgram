@@ -66,6 +66,12 @@ const theme = extendTheme({
         fontWeight: "extrabold",
       },
       variants: {
+        base: {
+          color: "white",
+        },
+        like: {
+          bgGradient: "linear(to-r, #121FCF, #CF1512)",
+        },
         sol: {
           bgGradient: "linear(to-r, #56B9BE, #856CCA, #CB7BDC)",
         },

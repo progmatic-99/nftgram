@@ -1,8 +1,8 @@
 import { Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
 import React, { Suspense, useEffect } from "react";
-import useRarible from "../hooks/useRarible";
+import useRarible from "../../hooks/useRarible";
 
-const NFTCard = React.lazy(() => import("../templates/NFTCard"));
+const NFTCard = React.lazy(() => import("../../templates/NFTCard"));
 
 const Rarible = ({ chain }) => {
   const { posts, loadPosts } = useRarible(chain);
@@ -22,9 +22,9 @@ const Rarible = ({ chain }) => {
               fallback={<Spinner color="base.secondary" size="md" />}
             >
               <NFTCard
-                desc={meta.description}
-                img={meta.content[0].url}
-                name={meta.name}
+                desc={meta?.description}
+                img={meta?.content[0]?.url}
+                name={meta?.name}
                 marketplace="Rarible"
               />
             </Suspense>

@@ -8,7 +8,7 @@ import {
 import { useRouter } from "next/router";
 import { useCallback } from "react";
 import { FiHome, FiCompass, FiLogOut } from "react-icons/fi";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoNotificationsOutline } from "react-icons/io5";
 import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 import { NavItem } from "./navItem";
@@ -16,7 +16,7 @@ import { NavItem } from "./navItem";
 const LinkItems = [
   { name: "Home", route: "/home", icon: FiHome },
   { name: "Explore", route: "/explore", icon: FiCompass },
-  { name: "Profile", route: "/notifs", icon: IoMdNotificationsOutline },
+  { name: "Notifications", route: "/notifs", icon: IoNotificationsOutline },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {

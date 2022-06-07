@@ -109,7 +109,7 @@ const Login = () => {
     <Flex maxH={"100vh"} align={"flex-start"} justify={"center"}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={6} px={6}>
         <Stack align={"center"}>
-          <Heading fontSize={"4xl"} textAlign={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"} variant="base">
             Log In
           </Heading>
           <Text fontSize={"lg"} color={"gray.600"}>
