@@ -67,7 +67,7 @@ const theme = extendTheme({
       },
       variants: {
         base: {
-          color: "white",
+          color: "black",
         },
         like: {
           bgGradient: "linear(to-r, #121FCF, #CF1512)",

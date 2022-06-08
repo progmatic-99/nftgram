@@ -38,12 +38,25 @@ func (h handler) LikePost(c *gin.Context) {
 		"OpenseaLink": post.OpenseaLink,
 		"Img":         post.Img,
 		"ProjectLink": post.ProjectLink,
+		"Owner":       post.Owner,
 		"UserID":      storedUser.ID,
 	}).Error
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
+		return
+	}
+
+	if len(post.Owner) > 0 {
+		c.SSEvent("data", map[string]interface{}{
+			"owner":        post.Owner,
+			"user":         storedUser.Wallets.Opensea,
+			"post_name":    post.Name,
+			"img":          post.Img,
+			"opensea_link": post.OpenseaLink,
+		})
+
 		return
 	}
 

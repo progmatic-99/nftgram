@@ -12,11 +12,16 @@ import { IoNotificationsOutline } from "react-icons/io5";
 import { useToken } from "../../store/token";
 import { useStore } from "../../store/user";
 import { NavItem } from "./navItem";
+import { useWalletStore } from "../../store/walletStore";
 
 const LinkItems = [
   { name: "Home", route: "/home", icon: FiHome },
   { name: "Explore", route: "/explore", icon: FiCompass },
-  { name: "Notifications", route: "/notifs", icon: IoNotificationsOutline },
+  {
+    name: "Notifications",
+    route: "/notifications",
+    icon: IoNotificationsOutline,
+  },
 ];
 
 export const SidebarContent = ({ onClose, ...rest }) => {
@@ -26,11 +31,15 @@ export const SidebarContent = ({ onClose, ...rest }) => {
     useCallback((state) => state.removeAccessToken, [])
   );
   const removeUser = useStore(useCallback((state) => state.removeUser, []));
+  const removeWallet = useWalletStore(
+    useCallback((state) => state.removeWallet, [])
+  );
 
   const logout = () => {
     router.push("/");
     removeAccessToken();
     removeUser();
+    removeWallet();
   };
 
   return (

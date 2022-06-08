@@ -9,13 +9,13 @@ import {
 } from "@chakra-ui/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { useToken } from "../../store/token";
+import { useWalletStore } from "../../store/walletStore";
 import { getWalletDetails } from "./wallet";
 
 const UserWallet = () => {
   const token = useToken(useCallback((state) => state.accessToken, []));
-
-  const [opensea, setOpensea] = useState("");
-  const [rarible, setRarible] = useState("");
+  const wallet = useWalletStore(useCallback((state) => state.wallet, []));
+  const addWallet = useWalletStore(useCallback((state) => state.addWallet, []));
 
   const toast = createStandaloneToast({
     duration: 3000,
@@ -26,17 +26,16 @@ const UserWallet = () => {
   const fetchDetails = useCallback(async () => {
     const wallet = await getWalletDetails(token);
     console.log(wallet);
-    setOpensea(wallet.opensea);
-    setRarible(wallet.rarible);
+    addWallet(wallet);
   }, []);
 
   useEffect(() => {
-    if (opensea === "" || rarible === "") {
+    if (!wallet) {
       fetchDetails();
     }
   }, []);
 
-  async function addWallet(opensea, rarible, token) {
+  async function postWallet(opensea, rarible, token) {
     const res = await fetcher({
       url: "wallet",
       method: "POST",
@@ -67,7 +66,7 @@ const UserWallet = () => {
       pt={{ base: 6, md: 8 }}
       align={{ base: "center", md: "flex-start" }}
     >
-      <form onSubmit={() => addWallet(opensea, rarible, token)}>
+      <form onSubmit={() => postWallet(opensea, rarible, token)}>
         <VStack spacing={6} p={3} justify="center">
           <Heading as="h3" variant="appName">
             Add your wallets!!
@@ -77,7 +76,7 @@ const UserWallet = () => {
               <FormLabel fontWeight="bold">Opensea Wallet</FormLabel>
               <Input
                 type="text"
-                value={opensea}
+                value={wallet?.opensea ?? ""}
                 onChange={(e) => setOpensea(e.target.value)}
               />
             </FormControl>
@@ -85,7 +84,7 @@ const UserWallet = () => {
               <FormLabel fontWeight="bold">Rarible Wallet</FormLabel>
               <Input
                 type="text"
-                value={rarible}
+                value={wallet?.rarible ?? ""}
                 onChange={(e) => setRarible(e.target.value)}
               />
             </FormControl>

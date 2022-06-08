@@ -10,5 +10,6 @@ type Post struct {
 	Img         string `json:"img"`
 	OpenseaLink string `json:"opensea_link"`
 	ProjectLink string `json:"project_link"`
+	Owner       string `json:"-"`
 	UserID      uuid.UUID
 }

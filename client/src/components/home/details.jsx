@@ -29,6 +29,7 @@ const Details = () => {
       pb={10}
       align={{ base: "center", md: "flex-start" }}
       spacing={4}
+      minH="100vh"
     >
       <Heading as="h3" variant="like">
         Liked Posts

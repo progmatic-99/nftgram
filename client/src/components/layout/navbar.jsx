@@ -30,7 +30,7 @@ const Navbar = () => {
         justifyContent="space-between"
         px={{ base: 4, lg: 0 }}
       >
-        <NextLink href="/" passHref>
+        <NextLink href={user ? "/home" : "/"} passHref>
           <Link>
             <Image w="60px" h="60px" alt="Qrator logo" src="/logo.webp" />
           </Link>

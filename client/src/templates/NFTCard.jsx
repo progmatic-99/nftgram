@@ -24,6 +24,7 @@ export default function NFTCard({
   opensea,
   project,
   marketplace = "OpenSea",
+  owner = "",
 }) {
   const user = useStore(useCallback((state) => state.user, []));
   const token = useToken(useCallback((state) => state.accessToken, []));
@@ -34,19 +35,31 @@ export default function NFTCard({
   });
   const [liked, setLiked] = useState(false);
 
-  const addToLike = async ({ name, desc, img, opensea, project, token }) => {
+  const addToLike = async ({
+    name,
+    desc,
+    img,
+    opensea,
+    project,
+    token,
+    owner = "",
+  }) => {
     setLiked(true);
+
+    const payload = {
+      name: name,
+      desc: desc,
+      img: img,
+      opensea_link: opensea,
+      project_link: project,
+      owner: owner,
+    };
+
     const data = await fetcher({
       url: "like",
       method: "POST",
       token: token,
-      data: {
-        name: name,
-        desc: desc,
-        img: img,
-        opensea_link: opensea,
-        project_link: project,
-      },
+      data: payload,
     });
 
     if (data?.error) {
@@ -129,11 +142,15 @@ export default function NFTCard({
               <IconButton
                 aria-label="Like Button"
                 icon={
-                  liked ? <AiFillLike /> : <AiOutlineLike fontSize="22px" />
+                  liked ? (
+                    <AiFillLike fontSize="22px" />
+                  ) : (
+                    <AiOutlineLike fontSize="22px" />
+                  )
                 }
                 variant="outline"
                 onClick={() =>
-                  addToLike({ name, img, opensea, project, desc, token })
+                  addToLike({ name, img, opensea, project, desc, token, owner })
                 }
                 _hover={{ bgColor: "base.secondary", color: "white" }}
               />
