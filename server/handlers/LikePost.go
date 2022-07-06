@@ -49,15 +49,21 @@ func (h handler) LikePost(c *gin.Context) {
 	}
 
 	if len(post.Owner) > 0 {
-		c.SSEvent("data", map[string]interface{}{
-			"owner":        post.Owner,
-			"user":         storedUser.Wallets.Opensea,
-			"post_name":    post.Name,
-			"img":          post.Img,
-			"opensea_link": post.OpenseaLink,
-		})
+		var notif = &models.Notification{
+			Owner:    post.Owner,
+			User:     storedUser.Wallets.Opensea,
+			PostName: post.Name,
+			Img:      post.Img,
+			Opensea:  post.OpenseaLink,
+		}
 
-		return
+		err = h.DB.Create(&notif).Error
+		if err != nil {
+			c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{
+				"error": err.Error(),
+			})
+			return
+		}
 	}
 
 	c.JSON(http.StatusCreated, gin.H{

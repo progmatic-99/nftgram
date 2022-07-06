@@ -44,6 +44,7 @@ func main() {
 	authRouter.GET("/api/like", h.GetLikePosts)
 	authRouter.POST("/api/wallet", h.AddWallet)
 	authRouter.GET("/api/wallet", h.GetUserWallet)
+	authRouter.GET("/api/notification", h.GetNotifications)
 
 	// Start the server on 8080
 	r.Run()
