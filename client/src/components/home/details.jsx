@@ -1,5 +1,6 @@
-import { Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
+import { Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
+import Spinner from "../spinner";
 import { useToken } from "../../store/token";
 import { fetcher } from "../../utils/fetcher";
 
@@ -36,7 +37,7 @@ const Details = () => {
       </Heading>
       <VStack p={6} justify="center">
         <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 4, md: 10 }}>
-          <Suspense fallback={<Spinner color="base.secondary" size="lg" />}>
+          <Suspense fallback={<Spinner />}>
             {posts.map(({ name, desc, img, project_link, opensea_link }) => {
               return (
                 <NFTCard

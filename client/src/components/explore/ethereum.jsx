@@ -1,6 +1,7 @@
-import { Button, Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
+import { Button, Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import React, { Suspense, useEffect } from "react";
 import usePosts from "../../hooks/usePosts";
+import Spinner from "../spinner";
 
 const NFTCard = React.lazy(() => import("../../templates/NFTCard"));
 
@@ -20,10 +21,7 @@ const Ethereum = () => {
         {posts.map(
           ({ name, id, image_url, permalink, asset_contract, description }) => {
             return (
-              <Suspense
-                key={id}
-                fallback={<Spinner color="base.secondary" size="md" />}
-              >
+              <Suspense key={id} fallback={<Spinner />}>
                 <NFTCard
                   desc={description}
                   img={image_url}

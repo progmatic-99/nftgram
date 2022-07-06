@@ -1,6 +1,7 @@
-import { Heading, SimpleGrid, Spinner, VStack } from "@chakra-ui/react";
+import { Heading, SimpleGrid, VStack } from "@chakra-ui/react";
 import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { OPENSEA_URL } from "../../utils/urls";
+import Spinner from "../spinner";
 import useAllWallets from "./getAllWallets";
 
 const NFTCard = React.lazy(() => import("../../templates/NFTCard"));
@@ -42,10 +43,7 @@ const UserFeed = () => {
               description,
             }) => {
               return (
-                <Suspense
-                  key={id}
-                  fallback={<Spinner color="base.secondary" size="md" />}
-                >
+                <Suspense key={id} fallback={<Spinner />}>
                   <NFTCard
                     desc={description}
                     img={image_url}
