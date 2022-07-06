@@ -25,7 +25,6 @@ const UserWallet = () => {
 
   const fetchDetails = useCallback(async () => {
     const wallet = await getWalletDetails(token);
-    console.log(wallet);
     addWallet(wallet);
   }, []);
 

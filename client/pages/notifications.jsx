@@ -1,44 +1,31 @@
-import { useState, useEffect } from "react";
-import { fetchEventSource } from "@microsoft/fetch-event-source";
-import { BASE_URL } from "../src/utils/urls";
+import { useState, useEffect, useCallback } from "react";
+import { useToken } from "../src/store/token";
+import { fetcher } from "../src/utils/fetcher";
 
 const Notifications = () => {
-  const [data, setData] = useState([]);
+  const [notifs, setNotifs] = useState(null);
+  const token = useToken(useCallback((state) => state.accessToken));
 
   useEffect(() => {
-    const fetchData = async () => {
-      await fetchEventSource(BASE_URL, {
-        headers: {
-          Accept: "text/event-stream",
-        },
-        onopen(res) {
-          if (res.ok && res.status === 200) {
-            console.log("Connection made ", res);
-          } else if (
-            res.status >= 400 &&
-            res.status < 500 &&
-            res.status !== 429
-          ) {
-            console.log("Client side error ", res);
-          }
-        },
-        onmessage(event) {
-          console.log(event.data);
-          const parsedData = JSON.parse(event.data);
-          setData((data) => [...data, parsedData]);
-        },
-        onclose() {
-          console.log("Connection closed by the server");
-        },
-        onerror(err) {
-          console.log("There was an error from server", err);
-        },
+    async function getNotifs() {
+      const data = await fetcher({
+        url: "notification",
+        method: "GET",
+        token: token,
       });
-    };
-    fetchData();
+      setNotifs(data.notifications);
+    }
+
+    getNotifs();
   }, []);
 
-  return <pre>{data}</pre>;
+  return (
+    <div>
+      {notifs?.map((notif) => (
+        <p>{notif.owner}</p>
+      ))}
+    </div>
+  );
 };
 
 export default Notifications;

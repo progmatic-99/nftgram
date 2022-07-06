@@ -45,7 +45,6 @@ export default function NFTCard({
     owner = "",
   }) => {
     setLiked(true);
-
     const payload = {
       name: name,
       desc: desc,

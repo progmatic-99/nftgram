@@ -10,7 +10,6 @@ const UserFeed = () => {
   const [posts, setPosts] = useState([]);
 
   const getFeed = useCallback(async () => {
-    console.log(wallets);
     wallets?.map(async (wallet) => {
       if (wallet?.opensea) {
         const data = await fetch(
